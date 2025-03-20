@@ -1,16 +1,21 @@
 import {
   ANSWERS_LIST_ID,
   NEXT_QUESTION_BUTTON_ID,
+  SKIP_QUESTION_BUTTON_ID,
   USER_INTERFACE_ID,
 } from '../constants.js';
 import { createQuestionElement } from '../views/questionView.js';
 import { createAnswerElement } from '../views/answerView.js';
 import { quizData } from '../data.js';
 
-export const initQuestionPage = () => {
+export const initQuestionPage = (userName) => {
   const userInterface = document.getElementById(USER_INTERFACE_ID);
   userInterface.innerHTML = '';
+  const el = document.createElement('h2');
+  // el.style.color = "gray"
+  el.textContent = `Player: ${userName}`;
 
+  userInterface.prepend(el);
   const currentQuestion = quizData.questions[quizData.currentQuestionIndex];
 
   const questionElement = createQuestionElement(currentQuestion.text);
@@ -26,11 +31,15 @@ export const initQuestionPage = () => {
 
   document
     .getElementById(NEXT_QUESTION_BUTTON_ID)
-    .addEventListener('click', nextQuestion);
+    .addEventListener('click', () => nextQuestion(userName));
+
+  document
+    .getElementById(SKIP_QUESTION_BUTTON_ID)
+    .addEventListener('click', () => nextQuestion(userName));
 };
 
-const nextQuestion = () => {
+const nextQuestion = (userName) => {
   quizData.currentQuestionIndex = quizData.currentQuestionIndex + 1;
 
-  initQuestionPage();
+  initQuestionPage(userName);
 };
