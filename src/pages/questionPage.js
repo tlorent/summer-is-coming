@@ -3,10 +3,12 @@ import {
   NEXT_QUESTION_BUTTON_ID,
   SKIP_QUESTION_BUTTON_ID,
   USER_INTERFACE_ID,
+  RESULTAT_BUTTON_ID
 } from '../constants.js';
 import { createQuestionElement } from '../views/questionView.js';
 import { createAnswerElement } from '../views/answerView.js';
 import { quizData } from '../data.js';
+import { initResultatPage  } from '../pages/resultatPage.js';
 
 export const initQuestionPage = (userName) => {
   const userInterface = document.getElementById(USER_INTERFACE_ID);
@@ -60,10 +62,22 @@ export const initQuestionPage = (userName) => {
   document
     .getElementById(SKIP_QUESTION_BUTTON_ID)
     .addEventListener('click', () => nextQuestion(userName));
-};
+
+    //  TODO
+    //  check if the question is last
+    //  showing the result button after the question is answered.
+    document
+    .getElementById(RESULTAT_BUTTON_ID)
+    .addEventListener('click', () => resultat(userName));
+
+  };
 
 const nextQuestion = (userName) => {
   quizData.currentQuestionIndex = quizData.currentQuestionIndex + 1;
 
   initQuestionPage(userName);
+};
+
+const resultat = (userName) => {  
+  initResultatPage(userName);     
 };
