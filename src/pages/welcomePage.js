@@ -1,11 +1,9 @@
 import { USER_INTERFACE_ID, START_QUIZ_BUTTON_ID } from '../constants.js';
 import { createWelcomeElement } from '../views/welcomeView.js';
 import { initQuestionPage } from './questionPage.js';
-  
 
-let userName = ""
+let userName = '';
 export const initWelcomePage = () => {
-
   const userInterface = document.getElementById(USER_INTERFACE_ID);
   userInterface.innerHTML = '';
 
@@ -16,9 +14,9 @@ export const initWelcomePage = () => {
     .getElementById(START_QUIZ_BUTTON_ID)
     .addEventListener('click', startQuiz);
 
-    document.querySelector(".input__name").addEventListener('change', (e) => {
-      userName = e.target.value
-    })
+  document.querySelector('.input__name').addEventListener('change', (e) => {
+    userName = e.target.value;
+  });
 };
 
 const startQuiz = () => {

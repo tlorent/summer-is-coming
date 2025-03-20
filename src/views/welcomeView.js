@@ -6,7 +6,7 @@ import { START_QUIZ_BUTTON_ID } from '../constants.js';
  */
 export const createWelcomeElement = () => {
   const element = document.createElement('div');
-  element.classList.add("welcome__block")
+  element.classList.add('welcome__block');
   element.innerHTML = String.raw`
     <h1>Welcome</h1>
     <label>

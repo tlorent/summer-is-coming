@@ -11,11 +11,11 @@ import { quizData } from '../data.js';
 export const initQuestionPage = (userName) => {
   const userInterface = document.getElementById(USER_INTERFACE_ID);
   userInterface.innerHTML = '';
-  const el = document.createElement("h2")
+  const el = document.createElement('h2');
   // el.style.color = "gray"
-  el.textContent = `Player: ${userName}`
+  el.textContent = `Player: ${userName}`;
 
-  userInterface.prepend(el)
+  userInterface.prepend(el);
   const currentQuestion = quizData.questions[quizData.currentQuestionIndex];
 
   const questionElement = createQuestionElement(currentQuestion.text);
