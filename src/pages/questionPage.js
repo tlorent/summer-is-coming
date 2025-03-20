@@ -24,10 +24,34 @@ export const initQuestionPage = (userName) => {
 
   const answersListElement = document.getElementById(ANSWERS_LIST_ID);
 
-  for (const [key, answerText] of Object.entries(currentQuestion.answers)) {
-    const answerElement = createAnswerElement(key, answerText);
-    answersListElement.appendChild(answerElement);
-  }
+  const currentQuestionAnswersList = currentQuestion.answers;
+
+  const answersListElements = Object.entries(currentQuestionAnswersList).map(
+    (answer) => {
+      const [key, answerText] = answer;
+      const answerElement = createAnswerElement(key, answerText);
+      answersListElement.appendChild(answerElement);
+      return answerElement;
+    }
+  );
+
+  answersListElements.forEach((answerElement) => {
+    const checkAnswer = () => {
+      answersListElements.forEach((answerElement) => {
+        answerElement.classList.remove('correct-answer');
+        answerElement.classList.remove('wrong-answer');
+      });
+
+      const { key: userChoice } = answerElement.dataset;
+      currentQuestion.selected = userChoice;
+      if (currentQuestion.selected === currentQuestion.correct) {
+        answerElement.classList.add('correct-answer');
+      } else {
+        answerElement.classList.add('wrong-answer');
+      }
+    };
+    answerElement.addEventListener('click', checkAnswer);
+  });
 
   document
     .getElementById(NEXT_QUESTION_BUTTON_ID)
