@@ -93,3 +93,30 @@ button:hover {
   background-color: rgb(41, 41, 41);
   transition: background-color 0.25s ease-in-out;
 }
+
+.answer-item {
+  min-width: 250px;
+  min-height: 50px;
+  list-style: none;
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 10px;
+  background-color: #62737c;
+  color: white;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  font-family: 'Cinzel', serif;
+  font-size: 18px;
+}
+
+.correct-answer {
+  background-color: green;
+}
+
+.wrong-answer {
+  background-color: red;
+}
