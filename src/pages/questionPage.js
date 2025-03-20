@@ -44,11 +44,16 @@ export const initQuestionPage = (userName) => {
 
       const { key: userChoice } = answerElement.dataset;
       currentQuestion.selected = userChoice;
-      if (currentQuestion.selected === currentQuestion.correct) {
-        answerElement.classList.add('correct-answer');
-      } else {
+      if (currentQuestion.selected !== currentQuestion.correct) {
         answerElement.classList.add('wrong-answer');
       }
+
+      answersListElements.forEach((el) => {
+        const { key } = el.dataset;
+        if (key === currentQuestion.correct) {
+          el.classList.add('correct-answer');
+        }
+      });
     };
     answerElement.addEventListener('click', checkAnswer);
   });
