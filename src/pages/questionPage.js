@@ -51,7 +51,7 @@ export const initQuestionPage = (userName) => {
 
       const { key: userChoice } = answerElement.dataset;
       currentQuestion.selected = userChoice;
-      
+
       if (currentQuestion.selected !== currentQuestion.correct) {
         answerElement.classList.add('wrong-answer');
       }
@@ -73,7 +73,7 @@ export const initQuestionPage = (userName) => {
         hint.href = currentQuestion.links[0].href;
         document.querySelector('body').appendChild(hint);
       }
-    };
+ 
     answerElement.addEventListener('click', checkAnswer);
 
 
