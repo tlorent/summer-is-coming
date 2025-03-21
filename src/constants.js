@@ -10,3 +10,5 @@ export const START_QUIZ_BUTTON_ID = 'start-quiz-button';
 export const ANSWERS_LIST_ID = 'answers-list';
 export const NEXT_QUESTION_BUTTON_ID = 'next-question-button';
 export const SKIP_QUESTION_BUTTON_ID = 'skip-question-button';
+export const WELCOME_BUTTON_ID = 'welcome-quiz-button';
+export const RESULTAT_BUTTON_ID = 'resultat-quiz-button';

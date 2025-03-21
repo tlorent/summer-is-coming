@@ -3,6 +3,7 @@ import {
   NEXT_QUESTION_BUTTON_ID,
   SKIP_QUESTION_BUTTON_ID,
 } from '../constants.js';
+import { RESULTAT_BUTTON_ID } from '../constants.js';
 
 /**
  * Create a full question element
@@ -23,7 +24,9 @@ export const createQuestionElement = (question) => {
     <button id="${NEXT_QUESTION_BUTTON_ID}">
       Next question
     </button>
-
+    <button id="${RESULTAT_BUTTON_ID}">
+    Resultat
+    </button>
   `;
 
   return element;
