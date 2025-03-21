@@ -54,12 +54,18 @@ export const initQuestionPage = (userName) => {
 
       if (currentQuestion.selected !== currentQuestion.correct) {
         answerElement.classList.add('wrong-answer');
+        const hint = document.createElement('a');
+        hint.classList.add('hint');
+        hint.textContent = `Hint: ${currentQuestion.links[0].text}`;
+        hint.href = currentQuestion.links[0].href;
+        document.querySelector('body').appendChild(hint);
       }
 
       answersListElements.forEach((el) => {
         const { key } = el.dataset;
         if (key === currentQuestion.correct) {
           el.classList.add('correct-answer');
+          
           correctAnswerTotal++;
         }
       });
@@ -73,7 +79,7 @@ export const initQuestionPage = (userName) => {
         hint.href = currentQuestion.links[0].href;
         document.querySelector('body').appendChild(hint);
       }
- 
+
     answerElement.addEventListener('click', checkAnswer);
 
 
