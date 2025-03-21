@@ -75,6 +75,7 @@ export const initQuestionPage = (userName) => {
 
         const hint = document.createElement('a');
         hint.classList.add('hint');
+        hint.setAttribute('target', '_blank');
         hint.textContent = `Hint: ${currentQuestion.links[0].text}`;
         hint.href = currentQuestion.links[0].href;
         document.querySelector('body').appendChild(hint);
