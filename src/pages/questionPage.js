@@ -38,8 +38,7 @@ export const initQuestionPage = (userName) => {
   answersListElements.forEach((answerElement) => {
     const checkAnswer = () => {
       answersListElements.forEach((answerElement) => {
-        answerElement.classList.remove('correct-answer');
-        answerElement.classList.remove('wrong-answer');
+        answerElement.classList.remove('correct-answer', 'wrong-answer');
       });
 
       const { key: userChoice } = answerElement.dataset;
@@ -48,6 +47,11 @@ export const initQuestionPage = (userName) => {
         answerElement.classList.add('correct-answer');
       } else {
         answerElement.classList.add('wrong-answer');
+        const hint = document.createElement('a');
+        hint.classList.add('hint');
+        hint.textContent = `Hint: ${currentQuestion.links[0].text}`;
+        hint.href = currentQuestion.links[0].href;
+        document.querySelector('body').appendChild(hint);
       }
     };
     answerElement.addEventListener('click', checkAnswer);
@@ -64,6 +68,9 @@ export const initQuestionPage = (userName) => {
 
 const nextQuestion = (userName) => {
   quizData.currentQuestionIndex = quizData.currentQuestionIndex + 1;
-
+  const hints = document.querySelectorAll('.hint');
+  if (hints) {
+    hints.forEach((hint) => hint.remove());
+  }
   initQuestionPage(userName);
 };
