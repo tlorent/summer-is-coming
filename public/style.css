@@ -134,3 +134,15 @@ button:hover , .button:hover {
 .wrong-answer {
   background-color: rgb(197, 17, 17);
 }
+
+.correct_answers {
+  color: green;
+  font-weight: bold;
+  font-size: 32px; 
+}
+
+.skiped_answers {
+  color: orange;
+  font-weight: bold;
+  font-size: 28px; 
+}
