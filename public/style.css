@@ -33,6 +33,10 @@ body {
   border-radius: 20px;
 }
 
+input {
+  text-align: center;
+}
+
 .scrollable {
   height: auto;
   max-height: 80vh;
@@ -119,4 +123,11 @@ button:hover {
 
 .wrong-answer {
   background-color: red;
+}
+
+
+
+.need__name::placeholder {
+  color: red;
+
 }

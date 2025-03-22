@@ -20,5 +20,11 @@ export const initWelcomePage = () => {
 };
 
 const startQuiz = () => {
-  initQuestionPage(userName);
+  if (userName.trim().length < 1) {
+    document.querySelector('.input__name').classList.add('need__name');
+    
+
+  } else  {
+    initQuestionPage(userName);
+  }
 };
