@@ -107,8 +107,8 @@ button:hover,
 }
 
 .answer-item {
-  min-width: 250px;
-  min-height: 50px;
+  width: 250px;
+  height: 100px;
   list-style: none;
   padding: 5px;
   display: flex;

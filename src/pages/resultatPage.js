@@ -1,9 +1,17 @@
-import { USER_INTERFACE_ID, WELCOME_BUTTON_ID, START_QUIZ_BUTTON_ID, RESULTAT_BUTTON_ID } from '../constants.js';
+import {
+  USER_INTERFACE_ID,
+  WELCOME_BUTTON_ID,
+  START_QUIZ_BUTTON_ID,
+  RESULTAT_BUTTON_ID,
+} from '../constants.js';
 import { initWelcomePage } from './welcomePage.js';
 import { createResultatElement } from '../views/resultatView.js';
 import { createWelcomeElement } from '../views/welcomeView.js';
+import { quizData } from '../data.js';
+import { clearHint } from '../helper.js';
 
 export const initResultatPage = (userName, correctAnswerTotal, skipTotal) => {
+  clearHint()
   const userInterface = document.getElementById(USER_INTERFACE_ID);
   userInterface.innerHTML = ''; 
 
@@ -33,14 +41,9 @@ export const initResultatPage = (userName, correctAnswerTotal, skipTotal) => {
   document
     .getElementById(WELCOME_BUTTON_ID)
     .addEventListener('click', startQuiz);
-
 };
 
-const startQuiz = (correctAnswerTotal, skipTotal) => {
-  correctAnswerTotal = 0;
-  skipTotal = 0;
+const startQuiz = () => {
+  quizData.currentQuestionIndex = 0;
   initWelcomePage();
 };
-
-
-
