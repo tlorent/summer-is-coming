@@ -17,7 +17,31 @@ export const initWelcomePage = () => {
   document.querySelector('.input__name').addEventListener('change', (e) => {
     userName = e.target.value;
   });
+// Background moving feature 
+  document.addEventListener('mousemove', (event) => {
+    const { clientX, clientY } = event;
+    const { innerWidth, innerHeight } = window;
+  
+    const staticArea = document.querySelector("#user-interface")
+    const rect = staticArea.getBoundingClientRect();
+    const isInsideStaticArea = (
+      clientX >= rect.left &&
+      clientX <= rect.right &&
+      clientY >= rect.top &&
+      clientY <= rect.bottom
+    );
+  
+    if (!isInsideStaticArea) {
+      const xOffset = (clientX / innerWidth) * 100;
+      const yOffset = (clientY / innerHeight) * 100;
+      document.body.style.backgroundPosition = `${xOffset}% ${yOffset}%`;
+    } else {
+      document.body.style.backgroundPosition = 'center center';
+    }
+  });
 };
+
+
 
 const startQuiz = () => {
   initQuestionPage(userName);
