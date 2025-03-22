@@ -6,10 +6,10 @@ import { quizData } from '../data.js';
 
 export const createAnswerElement = (key, answerText) => {
   const element = document.createElement('li');
-  element.classList.add('answer-item');
+  element.classList.add('answer-item', 'button');
   element.setAttribute('data-key', key);
   element.innerHTML = String.raw`
-    ${answerText};
+    ${answerText}
   `;
   return element;
 };

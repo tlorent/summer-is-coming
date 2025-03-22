@@ -6,9 +6,14 @@ import { WELCOME_BUTTON_ID } from "../constants.js";
  */
 export const createResultatElement = () => {
   const element = document.createElement('div');
+
   element.innerHTML = String.raw`
     <h1>Resultat</h1>
-    <button id="${WELCOME_BUTTON_ID}">to the home page</button>
+      <div class="correct_answers"></div>
+      <p class="skiped_answers"></p>
+      <div class="result__content"></div>
+
+    <button id="${WELCOME_BUTTON_ID}">Start the Quis again</button>
   `;
   return element;
 };
