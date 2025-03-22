@@ -1,12 +1,9 @@
 import {
   USER_INTERFACE_ID,
   WELCOME_BUTTON_ID,
-  START_QUIZ_BUTTON_ID,
-  RESULTAT_BUTTON_ID,
 } from '../constants.js';
 import { initWelcomePage } from './welcomePage.js';
 import { createResultatElement } from '../views/resultatView.js';
-import { createWelcomeElement } from '../views/welcomeView.js';
 import { quizData } from '../data.js';
 import { clearHint } from '../helper.js';
 
@@ -18,13 +15,11 @@ export const initResultatPage = (userName, correctAnswerTotal, skipTotal) => {
   const resultatElement = createResultatElement(); 
   userInterface.appendChild(resultatElement); 
 
-
   const title = document.querySelector('.title');
   title.textContent = `${userName}, you did this!`;
 
   const correctAnswers = resultatElement.querySelector('.correct_answers');
   correctAnswers.textContent = "correct :" + correctAnswerTotal;
-
 
   const skipedAnswers = resultatElement.querySelector('.skiped_answers');
   skipedAnswers.textContent = "skiped :" + skipTotal;
