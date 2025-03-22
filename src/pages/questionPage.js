@@ -14,6 +14,9 @@ import { clearHint, showHint, updateQuestion } from '../helper.js';
 let correctAnswerTotal = 0;
 let skipTotal = 0;
 
+export let resultsArray = [];
+
+
 export const initQuestionPage = (userName) => {
   // here insted to do a foreach to clear the hint i do a function that clear any hint every time the question page will be created
   clearHint();
@@ -64,6 +67,12 @@ export const initQuestionPage = (userName) => {
       const newCurrentQuestion = updateQuestion(quizData.currentQuestionIndex, {
         selected: userChoice,
       });
+      const anwerForResult = {
+        step: quizData.currentQuestionIndex,
+        correct: newCurrentQuestion.correct,
+        selected: newCurrentQuestion.selected
+      };
+      resultsArray.push(anwerForResult);
 
       if (newCurrentQuestion.selected !== currentQuestion.correct) {
         answerElement.classList.remove('button');
