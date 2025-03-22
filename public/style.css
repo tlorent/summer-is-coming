@@ -82,7 +82,8 @@ button {
   margin-left: 15px;
 }
 
-button:hover , .button:hover {
+button:hover,
+.button:hover {
   transition: background-color 0.25s ease-in-out;
   background-color: #384953;
   transform: scale(1.05);
@@ -138,11 +139,15 @@ button:hover , .button:hover {
 .correct_answers {
   color: green;
   font-weight: bold;
-  font-size: 32px; 
+  font-size: 32px;
 }
 
 .skiped_answers {
   color: orange;
   font-weight: bold;
-  font-size: 28px; 
+  font-size: 28px;
+}
+.helperText {
+  background-color: rgb(158, 71, 71);
+  color: white;
 }
