@@ -151,3 +151,7 @@ button:hover,
   background-color: rgb(158, 71, 71);
   color: white;
 }
+
+.result__content {
+  padding-bottom: 40px;
+}
