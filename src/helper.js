@@ -23,9 +23,9 @@ export const showHint = (classNameArr, text, url = null) => {
   const helperText = document.createElement(`${url ? 'a' : 'div'}`);
   if (url) {
     helperText.setAttribute('target', '_blank');
+    helperText.href = url;
   }
   helperText.classList.add(...classNameArr);
   helperText.textContent = text;
-  helperText.href = url;
   return helperText;
 };
