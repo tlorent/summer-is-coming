@@ -102,11 +102,11 @@ export const initQuestionPage = (userName) => {
       const resultButton = document.getElementById(RESULTAT_BUTTON_ID);
       resultButton.style.display = "none"; 
       if (quizData.currentQuestionIndex === quizData.questions.length - 1) {
-        resultButton.style.display = "block";   
+        resultButton.style.display = "inline";   
         resultButton.addEventListener('click', () => {
               
-const ex = document.getElementById(RESULTAT_BUTTON_ID);
-ex.style.display="none";
+          const resultButton = document.getElementById(RESULTAT_BUTTON_ID);
+          resultButton.style.display="none";
           resultat(userName, correctAnswerTotal, skipTotal);
 
         });

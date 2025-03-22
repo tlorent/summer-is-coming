@@ -120,3 +120,15 @@ button:hover {
 .wrong-answer {
   background-color: red;
 }
+
+.correct_answers {
+  color: green;
+  font-weight: bold;
+  font-size: 32px; 
+}
+
+.skiped_answers {
+  color: orange;
+  font-weight: bold;
+  font-size: 28px; 
+}
