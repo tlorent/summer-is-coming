@@ -1,5 +1,5 @@
 import { quizData } from './data.js';
-// I add a new file that we can put the generic functions
+// I add a new file that we can put the helper functions
 export const updateQuestion = (questionIndex, updatedValue) => {
   let { questions } = quizData;
   const newQuestions = questions.map((question, index) => {

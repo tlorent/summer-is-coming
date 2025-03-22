@@ -55,7 +55,7 @@ export const initQuestionPage = (userName) => {
         answerElement.classList.remove('correct-answer', 'wrong-answer');
       });
       const { key: userChoice } = answerElement.dataset;
-      //also here i do a generic function that can update any question depending on the question index
+      //also here i do a helper function that can update any question depending on the question index
       const newCurrentQuestion = updateQuestion(quizData.currentQuestionIndex, {
         selected: userChoice,
       });
