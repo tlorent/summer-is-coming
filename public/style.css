@@ -1,10 +1,19 @@
 body {
   background-image: url('background.jpg');
-  background-size: cover;
+  background-size: 102% 102%;
   background-repeat: no-repeat;
+  background-position: center;
+  transition: background-position 0.1s ease-out;
+  height: 100vh;
   font-family: 'Cinzel', serif;
 }
 
+#user-interface {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
 .welcome__block {
   display: flex;
   flex-direction: column;
@@ -70,11 +79,13 @@ button {
   transition: background-color 0.25s ease-in;
   font-family: 'Cinzel', serif;
   font-size: 18px;
+  margin-left: 15px;
 }
 
-button:hover {
-  transition: background-color 0.5s ease-in-out;
+button:hover , .button:hover {
+  transition: background-color 0.25s ease-in-out;
   background-color: #384953;
+  transform: scale(1.05);
 }
 
 #answers-list {
@@ -112,11 +123,14 @@ button:hover {
   font-family: 'Cinzel', serif;
   font-size: 18px;
 }
+.answer-item:hover {
+  transform: scale(1.05);
+}
 
 .correct-answer {
-  background-color: green;
+  background-color: rgba(0, 128, 0, 0.828);
 }
 
 .wrong-answer {
-  background-color: red;
+  background-color: rgb(197, 17, 17);
 }

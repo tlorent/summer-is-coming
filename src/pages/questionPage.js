@@ -54,6 +54,7 @@ export const initQuestionPage = (userName) => {
 
       if (currentQuestion.selected !== currentQuestion.correct) {
         answerElement.classList.add('wrong-answer');
+        answerElement.classList.remove('button');
         const hint = document.createElement('a');
         hint.classList.add('hint');
         hint.textContent = `Hint: ${currentQuestion.links[0].text}`;
@@ -65,6 +66,8 @@ export const initQuestionPage = (userName) => {
         const { key } = el.dataset;
         if (key === currentQuestion.correct) {
           el.classList.add('correct-answer');
+          //remove 'button' class to not change backgrondcolor if the answer have correct 'answer-class'
+          el.classList.remove('button');
           
           correctAnswerTotal++;
         }
