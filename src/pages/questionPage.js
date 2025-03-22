@@ -17,16 +17,21 @@ let skipTotal = 0;
 export const initQuestionPage = (userName) => {
   // here insted to do a foreach to clear the hint i do a function that clear any hint every time the question page will be created
   clearHint();
+  //temporary descision
+  if (quizData.currentQuestionIndex === 0) {
+    correctAnswerTotal = 0;
+    skipTotal = 0;
+  }
   const userInterface = document.getElementById(USER_INTERFACE_ID);
   userInterface.innerHTML = '';
 
   const el = document.createElement('h2');
-  // el.style.color = "gray"
   el.textContent = `Player: ${userName}`;
   userInterface.prepend(el);
 
   const currentQuestion = quizData.questions[quizData.currentQuestionIndex];
 
+  // if (document.contains)
   const questionElement = createQuestionElement(currentQuestion.text);
 
   userInterface.appendChild(questionElement);

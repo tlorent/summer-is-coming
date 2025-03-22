@@ -9,7 +9,7 @@ export const createAnswerElement = (key, answerText) => {
   element.classList.add('answer-item', 'button');
   element.setAttribute('data-key', key);
   element.innerHTML = String.raw`
-    ${answerText};
+    ${answerText}
   `;
   return element;
 };
