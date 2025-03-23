@@ -10,8 +10,7 @@ export const createWelcomeElement = () => {
   element.innerHTML = String.raw`
     <h1>Welcome</h1>
     <label>
-      <span>Your name:</span>
-      <input class="input__name"/>
+      <input class="input__name" placeholder="Your Name"/>
     </label>
     <button id="${START_QUIZ_BUTTON_ID}">start quiz</button>
   `;

@@ -1,7 +1,8 @@
-import { USER_INTERFACE_ID, START_QUIZ_BUTTON_ID } from '../constants.js'
-import { quizData } from '../data.js'
-import { createWelcomeElement } from '../views/welcomeView.js'
-import { initQuestionPage } from './questionPage.js'
+import { USER_INTERFACE_ID, START_QUIZ_BUTTON_ID } from '../constants.js';
+import { createWelcomeElement } from '../views/welcomeView.js';
+import { initQuestionPage } from './questionPage.js';
+import { clearHint, showHint, updateQuestion } from '../helper.js';
+import { quizData } from '../data.js';
 
 let userName = ''
 export const initWelcomePage = () => {
@@ -42,7 +43,19 @@ export const initWelcomePage = () => {
 }
 
 const startQuiz = () => {
-  //https://github.com/tlorent/summer-is-coming/issues/34 fixed
-  initQuestionPage(userName)
-  quizData.questions.forEach((question) => (question.selected = null))
-}
+  if (userName.trim().length < 1) {
+    document.querySelector('.input__name').classList.add('need__name');
+    const helperText = showHint(
+      ['hint', 'helperText'],
+      `To continue, enter your name.`
+    );
+    document.querySelector('body').appendChild(helperText);
+    return;
+
+  } else  {
+    initQuestionPage(userName)
+    quizData.questions.forEach((question) => (question.selected = null))
+  }
+  
+};
+

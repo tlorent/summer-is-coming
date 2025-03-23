@@ -42,6 +42,10 @@ body {
   border-radius: 20px;
 }
 
+input {
+  text-align: center;
+}
+
 .scrollable {
   height: auto;
   max-height: 80vh;
@@ -150,4 +154,11 @@ button:hover,
 .helperText {
   background-color: rgb(158, 71, 71);
   color: white;
+}
+
+
+
+.need__name::placeholder {
+  color: red;
+
 }
