@@ -10,11 +10,18 @@ import { RESULTAT_BUTTON_ID } from '../constants.js';
  * @returns {Element}
  */
 export const createQuestionElement = (question) => {
+  if (question.backgroundImage) {
+    document.body.style.backgroundImage = `url(/${question.backgroundImage})`;
+  } else {
+    document.body.style.backgroundImage = 'none';
+  }
+  document.body.style.backgroundSize = 'cover';
+  document.body.style.backgroundPosition = 'center';
   const element = document.createElement('div');
 
   // I use String.raw just to get fancy colors for the HTML in VS Code.
   element.innerHTML = String.raw`
-    <h1>${question}</h1>
+    <h1>${question.text}</h1>
 
     <ul id="${ANSWERS_LIST_ID}">
     </ul>

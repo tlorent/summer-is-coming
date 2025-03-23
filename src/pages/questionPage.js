@@ -43,7 +43,7 @@ export const initQuestionPage = (userName) => {
     JSON.stringify(quizData.currentQuestionIndex)
   );
 
-  const questionElement = createQuestionElement(currentQuestion.text);
+  const questionElement = createQuestionElement(currentQuestion);
   userInterface.appendChild(questionElement);
 
   const answersListElement = document.getElementById(ANSWERS_LIST_ID);
