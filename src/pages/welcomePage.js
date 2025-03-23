@@ -2,6 +2,7 @@ import { USER_INTERFACE_ID, START_QUIZ_BUTTON_ID } from '../constants.js';
 import { createWelcomeElement } from '../views/welcomeView.js';
 import { initQuestionPage } from './questionPage.js';
 import { quizData } from '../data.js';
+import { clearHint, showHint, updateQuestion } from '../helper.js';
 
 let userName = '';
 
@@ -21,8 +22,9 @@ export const initWelcomePage = () => {
   const userInterface = document.getElementById(USER_INTERFACE_ID);
   userInterface.innerHTML = '';
 
-  const welcomeElement = createWelcomeElement();
-  userInterface.appendChild(welcomeElement);
+  const welcomeElement = createWelcomeElement()
+  userInterface.appendChild(welcomeElement)
+
 
   document.getElementById(START_QUIZ_BUTTON_ID)
     .addEventListener('click', startQuiz);
@@ -40,26 +42,42 @@ export const initWelcomePage = () => {
     const staticArea = document.querySelector("#user-interface")
     const rect = staticArea.getBoundingClientRect();
     const isInsideStaticArea = (
+
       clientX >= rect.left &&
       clientX <= rect.right &&
       clientY >= rect.top &&
       clientY <= rect.bottom
-    );
+      );
+
 
     if (!isInsideStaticArea) {
-      const xOffset = (clientX / innerWidth) * 100;
-      const yOffset = (clientY / innerHeight) * 100;
-      document.body.style.backgroundPosition = `${xOffset}% ${yOffset}%`;
+      const xOffset = (clientX / innerWidth) * 100
+      const yOffset = (clientY / innerHeight) * 100
+      document.body.style.backgroundPosition = `${xOffset}% ${yOffset}%`
     } else {
-      document.body.style.backgroundPosition = 'center center';
+      document.body.style.backgroundPosition = 'center center'
     }
-  });
-};
 
+  })
+}
 
 const startQuiz = () => {
-  // Store the starting question index if starting a new quiz
-  quizData.currentQuestionIndex = 0;
-  localStorage.setItem("currentQuestion", JSON.stringify(quizData.currentQuestionIndex));
-  initQuestionPage(userName);  // Start the quiz after clicking the button
+  if (userName.trim().length < 1) {
+    document.querySelector('.input__name').classList.add('need__name');
+    const helperText = showHint(
+      ['hint', 'helperText'],
+      `To continue, enter your name.`
+    );
+    document.querySelector('body').appendChild(helperText);
+    return;
+
+  } else  {
+    quizData.currentQuestionIndex = 0;
+    localStorage.setItem("currentQuestion", JSON.stringify(quizData.currentQuestionIndex));
+    initQuestionPage(userName)
+    quizData.questions.forEach((question) => (question.selected = null))
+    
+  }
+  
 };
+
