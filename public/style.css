@@ -1,3 +1,6 @@
+* {
+  box-sizing: border-box;
+}
 body {
   background-image: url('background.jpg');
   background-size: 102% 102%;
@@ -150,4 +153,60 @@ button:hover,
 .helperText {
   background-color: rgb(158, 71, 71);
   color: white;
+}
+.question-section {
+  display: flex;
+  flex-direction: column;
+}
+.buttons-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+.quiz-tracker-div {
+  margin-top: 50px;
+  display: flex;
+  gap: 32px;
+  justify-content: center;
+  align-items: center;
+}
+
+.question-check-box {
+  width: 15px;
+  height: 15px;
+  background-color: black;
+  border-radius: 50%;
+  cursor: pointer;
+  position: relative;
+}
+.question-check-box::after {
+  content: '';
+  width: 32px;
+  height: 1px;
+  background-color: #62737c;
+  position: absolute;
+  left: 100%;
+  top: 50%;
+  z-index: 1;
+}
+.question-check-box:last-child::after {
+  display: none;
+}
+.question-check-box.answered {
+  background: green;
+}
+
+.question-check-box.skipped {
+  background: #eb5b00;
+}
+.question-check-box.active {
+  width: 30px;
+  height: 30px;
+  border: 8px black solid;
+  background-color: white;
+}
+
+.question-check-box.active::after {
+  left: calc(100% + 8px);
 }

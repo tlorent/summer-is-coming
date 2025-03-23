@@ -1,6 +1,7 @@
 import {
   ANSWERS_LIST_ID,
   NEXT_QUESTION_BUTTON_ID,
+  QUIZ_TRACKER_SECTION,
   SKIP_QUESTION_BUTTON_ID,
   USER_INTERFACE_ID,
   RESULTAT_BUTTON_ID,
@@ -93,6 +94,35 @@ export const initQuestionPage = (userName) => {
     answerElement.addEventListener('click', checkAnswer);
   });
 
+  const quizTracker = document.getElementById(QUIZ_TRACKER_SECTION);
+  quizTracker.classList.add('quiz-tracker-div');
+
+  const { questions } = quizData;
+
+  questions.forEach((question, index) => {
+    const questionCheck = document.createElement('div');
+    questionCheck.classList.add('question-check-box');
+    if (index === quizData.currentQuestionIndex) {
+      questionCheck.classList.add('active');
+    }
+
+    const { skipped, selected } = question;
+
+    if (selected) {
+      questionCheck.classList.add('answered');
+    }
+
+    if (skipped) {
+      questionCheck.classList.add('skipped');
+    }
+    // when the user click the button it should display the question ,, i have a problem that i can not access the user name
+    // questionCheck.addEventListener('click', () => {
+    //   quizData.currentQuestionIndex = index;
+    //   initQuestionPage();
+    // });
+    quizTracker.appendChild(questionCheck);
+  });
+
   document
     .getElementById(NEXT_QUESTION_BUTTON_ID)
     .addEventListener('click', () => nextQuestion(userName, 'next'));
@@ -118,6 +148,9 @@ export const initQuestionPage = (userName) => {
 
 const nextQuestion = (userName, eventType) => {
   const currentQuestion = quizData.questions[quizData.currentQuestionIndex];
+  if (eventType === 'skip') {
+    updateQuestion(quizData.currentQuestionIndex, { skipped: true });
+  }
   if (eventType === 'next' && !currentQuestion.selected) {
     const helperText = showHint(
       ['hint', 'helperText'],

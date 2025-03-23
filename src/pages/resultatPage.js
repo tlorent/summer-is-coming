@@ -6,35 +6,37 @@ import {
 } from '../constants.js';
 import { initWelcomePage } from './welcomePage.js';
 import { createResultatElement } from '../views/resultatView.js';
-import { createWelcomeElement } from '../views/welcomeView.js';
 import { quizData } from '../data.js';
 import { clearHint } from '../helper.js';
 
 export const initResultatPage = (userName, correctAnswerTotal, skipTotal) => {
-  clearHint()
+  clearHint();
   const userInterface = document.getElementById(USER_INTERFACE_ID);
-  userInterface.innerHTML = ''; 
+  userInterface.innerHTML = '';
 
-  const resultatElement = createResultatElement(); 
-  userInterface.appendChild(resultatElement); 
+  const resultatElement = createResultatElement();
+  userInterface.appendChild(resultatElement);
 
-  const el = document.createElement('h2'); 
+  const el = document.createElement('h2');
   el.textContent = `${userName}, you did this!`;
-  resultatElement.prepend(el); 
+  resultatElement.prepend(el);
 
   const correctAnswers = resultatElement.querySelector('.correct_answers');
-  correctAnswers.textContent = "correct :" + correctAnswerTotal;
-
+  correctAnswers.textContent = 'correct :' + correctAnswerTotal;
 
   const skipedAnswers = resultatElement.querySelector('.skiped_answers');
-  skipedAnswers.textContent = "skiped :" + skipTotal;
+  skipedAnswers.textContent = 'skiped :' + skipTotal;
 
   const resultat = resultatElement.querySelector('.result__content');
 
-  if (correctAnswerTotal <= 3) {resultat.textContent = `"You know nothing, Jon Snow!" Your knowledge of Westeros is as thin as the Night’s Watch rations. Time to rewatch the series or revisit the books!`}
-  else if (correctAnswerTotal > 3 && correctAnswerTotal <= 5) {resultat.textContent = `"A lion does not concern himself with the opinion of sheep." You have a decent grasp of the realm, but you’re not quite ready to claim the Iron Throne. Keep sharpening your knowledge, and soon, you’ll rule like a true Westerosi lord!`}
-  else {resultat.textContent = `"When you play the game of thrones, you win or you die." Congratulations! Your knowledge rivals that of Varys and Tyrion combined. You would survive the intrigues of King’s Landing and maybe even claim the throne yourself!`};
-  
+  if (correctAnswerTotal <= 3) {
+    resultat.textContent = `"You know nothing, Jon Snow!" Your knowledge of Westeros is as thin as the Night’s Watch rations. Time to rewatch the series or revisit the books!`;
+  } else if (correctAnswerTotal > 3 && correctAnswerTotal <= 5) {
+    resultat.textContent = `"A lion does not concern himself with the opinion of sheep." You have a decent grasp of the realm, but you’re not quite ready to claim the Iron Throne. Keep sharpening your knowledge, and soon, you’ll rule like a true Westerosi lord!`;
+  } else {
+    resultat.textContent = `"When you play the game of thrones, you win or you die." Congratulations! Your knowledge rivals that of Varys and Tyrion combined. You would survive the intrigues of King’s Landing and maybe even claim the throne yourself!`;
+  }
+
   userInterface.appendChild(el);
   userInterface.appendChild(resultat);
 

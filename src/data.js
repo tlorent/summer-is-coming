@@ -23,6 +23,7 @@ export const quizData = {
       },
       correct: 'b',
       selected: null,
+      skipped: false, // New property to track skipped questions
       links: [
         {
           text: 'History of Aegon the Conqueror',
@@ -40,6 +41,7 @@ export const quizData = {
       },
       correct: 'd',
       selected: null,
+      skipped: false,
       links: [
         {
           text: 'The truth behind Jon Snow’s parentage',
@@ -57,6 +59,7 @@ export const quizData = {
       },
       correct: 'a',
       selected: null,
+      skipped: false,
       links: [
         {
           text: 'House Stark and their legacy',
@@ -74,6 +77,7 @@ export const quizData = {
       },
       correct: 'b',
       selected: null,
+      skipped: false,
       links: [
         {
           text: 'Arya Stark’s deadly weapon',
@@ -92,6 +96,7 @@ export const quizData = {
       },
       correct: 'a',
       selected: null,
+      skipped: false,
       links: [
         {
           text: 'Why Bran Stark was chosen as king',
@@ -109,6 +114,7 @@ export const quizData = {
       },
       correct: 'c',
       selected: null,
+      skipped: false,
       links: [
         {
           text: 'The fall of the Night King',
@@ -126,6 +132,7 @@ export const quizData = {
       },
       correct: 'b',
       selected: null,
+      skipped: false,
       links: [
         {
           text: 'Daenerys’ bond with Drogon',
@@ -143,6 +150,7 @@ export const quizData = {
       },
       correct: 'a',
       selected: null,
+      skipped: false,
       links: [
         {
           text: 'The origins of the White Walkers',
@@ -160,6 +168,7 @@ export const quizData = {
       },
       correct: 'c',
       selected: null,
+      skipped: false,
       links: [
         {
           text: 'The Scorpion’s role in warfare',
@@ -178,6 +187,7 @@ export const quizData = {
       },
       correct: 'd',
       selected: null,
+      skipped: false,
       links: [
         {
           text: 'House Stark’s legendary sword',

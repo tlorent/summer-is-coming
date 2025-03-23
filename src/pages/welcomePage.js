@@ -44,5 +44,10 @@ export const initWelcomePage = () => {
 
 
 const startQuiz = () => {
-  initQuestionPage(userName);
+  const userInterface = document.getElementById(USER_INTERFACE_ID);
+  const el = document.createElement('h2'); // i think we should change the variable nme to be descriptive like userName
+  // el.style.color = "gray"
+  el.textContent = `Player: ${userName}`;
+  userInterface.prepend(el);
+  initQuestionPage();
 };

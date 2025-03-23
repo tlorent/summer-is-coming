@@ -29,3 +29,15 @@ export const showHint = (classNameArr, text, url = null) => {
   helperText.textContent = text;
   return helperText;
 };
+// export const skipQuestion = (questionIndex) => {
+//   let { questions } = quizData;
+//   let currentQuestion = questions[questionIndex];
+//   const newQuestions = questions.map((question, index) => {
+//     if (index === questionIndex) {
+//       return (question = { ...currentQuestion, skipped: true });
+//     } else {
+//       return question;
+//     }
+//   });
+//   quizData.questions = newQuestions;
+// };
