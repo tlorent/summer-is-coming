@@ -15,15 +15,26 @@ let correctAnswerTotal = 0
 let skipTotal = 0
 
 export const initQuestionPage = (userName) => {
-  // here insted to do a foreach to clear the hint i do a function that clear any hint every time the question page will be created
-  clearHint()
-  //temporary descision
+
+  clearHint();
+
+  const savedQuestionIndex = localStorage.getItem('currentQuestion');
+  if (savedQuestionIndex) {
+    quizData.currentQuestionIndex = JSON.parse(savedQuestionIndex);
+  } else {
+    quizData.currentQuestionIndex = 0;
+  }
+
+
   if (quizData.currentQuestionIndex === 0) {
     correctAnswerTotal = 0
     skipTotal = 0
   }
-  const userInterface = document.getElementById(USER_INTERFACE_ID)
-  userInterface.innerHTML = ''
+
+
+  const userInterface = document.getElementById(USER_INTERFACE_ID);
+  userInterface.innerHTML = '';
+
 
   const el = document.createElement('h2')
   el.textContent = `Player: ${userName}`
@@ -31,46 +42,39 @@ export const initQuestionPage = (userName) => {
 
   const currentQuestion = quizData.questions[quizData.currentQuestionIndex]
 
-  // if (document.contains)
-  const questionElement = createQuestionElement(currentQuestion.text)
+  localStorage.setItem('currentQuestion', JSON.stringify(quizData.currentQuestionIndex));
 
-  userInterface.appendChild(questionElement)
+  const questionElement = createQuestionElement(currentQuestion.text);
+  userInterface.appendChild(questionElement);
 
-  const answersListElement = document.getElementById(ANSWERS_LIST_ID)
+  const answersListElement = document.getElementById(ANSWERS_LIST_ID);
+  const currentQuestionAnswersList = currentQuestion.answers;
 
-  const currentQuestionAnswersList = currentQuestion.answers
-  //creating Li elements and adding to UL (nik)
-  const answersListElements = Object.entries(currentQuestionAnswersList).map(
-    (answer) => {
-      const [key, answerText] = answer
-      const answerElement = createAnswerElement(key, answerText)
-      answersListElement.appendChild(answerElement)
-      return answerElement
-    }
-  )
+  const answersListElements = Object.entries(currentQuestionAnswersList).map((answer) => {
+    const [key, answerText] = answer;
+    const answerElement = createAnswerElement(key, answerText);
+    answersListElement.appendChild(answerElement);
+    return answerElement;
+  });
 
   answersListElements.forEach((answerElement) => {
     const checkAnswer = () => {
-      // here i get the currentQuestion again  because i need it here to updated it !
-      const currentQuestion = quizData.questions[quizData.currentQuestionIndex]
-      // here i checked if the user select the answer i will return so the rest if the function will not executed !
-      if (currentQuestion.selected) {
-        return //after return we stop function because we selected the answer
-      }
-      // answersListElements.forEach((answerElement) => {
-      //   answerElement.classList.remove('correct-answer', 'wrong-answer');
-      // }); //I don't understand what this does. Everything works without this
-      const { key: userChoice } = answerElement.dataset //can not understand it
-      // const userChoice = answerElement.dataset.key alternative version for clear understanding (nik)
-      //also here i do a helper function that can update any question depending on the question index
+      const currentQuestion = quizData.questions[quizData.currentQuestionIndex];
+      if (currentQuestion.selected) return;
+      answersListElements.forEach((answerElement) => {
+        answerElement.classList.remove('correct-answer', 'wrong-answer');
+      });
+      const { key: userChoice } = answerElement.dataset;
+
       const newCurrentQuestion = updateQuestion(quizData.currentQuestionIndex, {
         selected: userChoice,
       })
 
       if (newCurrentQuestion.selected !== currentQuestion.correct) {
-        answerElement.classList.remove('button')
-        answerElement.classList.add('wrong-answer')
-        // also here i use Nikita code and put it in a function so i can use it also
+
+        answerElement.classList.remove('button');
+        answerElement.classList.add('wrong-answer');
+
         const hint = showHint(
           ['hint'],
           `Hint: ${newCurrentQuestion.links[0].text}`,
@@ -78,10 +82,12 @@ export const initQuestionPage = (userName) => {
         )
         document.querySelector('body').appendChild(hint)
       } else {
-        answerElement.classList.remove('button')
-        answerElement.classList.add('correct-answer')
-        //I move  correctAnswerTotal++  here becaue if we keep it down it will count every answer is correct
-        correctAnswerTotal++
+
+        answerElement.classList.remove('button');
+        answerElement.classList.add('correct-answer');
+        correctAnswerTotal++;
+        localStorage.setItem("correctAnswerTotal", JSON.stringify(correctAnswerTotal));
+
       }
       answersListElements.forEach((el) => {
         const { key } = el.dataset
@@ -116,31 +122,36 @@ export const initQuestionPage = (userName) => {
   if (quizData.currentQuestionIndex === quizData.questions.length - 1) {
     resultButton.style.display = 'inline'
     resultButton.addEventListener('click', () => {
-      const resultButton = document.getElementById(RESULTAT_BUTTON_ID)
-      resultButton.style.display = 'none'
-      resultat(userName, correctAnswerTotal, skipTotal)
-    })
+
+      const resultButton = document.getElementById(RESULTAT_BUTTON_ID);
+      resultButton.style.display = 'none';
+      initResultatPage(userName, correctAnswerTotal, skipTotal);
+    });
+
   }
 }
 
+// Now nextQuestion function definition
 const nextQuestion = (userName, eventType) => {
-  const currentQuestion = quizData.questions[quizData.currentQuestionIndex]
+  const currentQuestion = quizData.questions[quizData.currentQuestionIndex];
+
   if (eventType === 'next' && !currentQuestion.selected) {
     const helperText = showHint(
       ['hint', 'helperText'],
-      `You have to answer the questionfirst or you can skipped it if you want`
-    )
-    document.querySelector('body').appendChild(helperText)
-    return
+      `You have to answer the question first or you can skip it if you want`
+    );
+    document.querySelector('body').appendChild(helperText);
+    return;
   }
-  quizData.currentQuestionIndex = quizData.currentQuestionIndex + 1
-  initQuestionPage(userName)
-  if (quizData.currentQuestionIndex === 9) {
-    const nextQuestionBytton = document.getElementById(NEXT_QUESTION_BUTTON_ID)
-    nextQuestionBytton.style.display = 'none'
-  }
-}
 
-const resultat = (userName, correctAnswerTotal, skipTotal) => {
-  initResultatPage(userName, correctAnswerTotal, skipTotal)
-}
+  quizData.currentQuestionIndex = quizData.currentQuestionIndex + 1;
+  localStorage.setItem('currentQuestion', JSON.stringify(quizData.currentQuestionIndex));
+  initQuestionPage(userName);
+
+  if (quizData.currentQuestionIndex === quizData.questions.length - 1) {
+    const nextQuestionButton = document.getElementById(NEXT_QUESTION_BUTTON_ID);
+    nextQuestionButton.style.display = 'none';
+  }
+  
+};
+

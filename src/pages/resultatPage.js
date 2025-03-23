@@ -19,7 +19,9 @@ export const initResultatPage = (userName, correctAnswerTotal, skipTotal) => {
   title.textContent = `${userName}, you did this!`;
 
   const correctAnswers = resultatElement.querySelector('.correct_answers');
-  correctAnswers.textContent = "correct :" + correctAnswerTotal;
+  correctAnswers.textContent = `correct : ${localStorage.getItem("correctAnswerTotal")}`;
+  // to get correctAnswerTotal  you can get it from local storage here "localStorage.getItem("correctAnswerTotal")"
+
 
   const skipedAnswers = resultatElement.querySelector('.skiped_answers');
   skipedAnswers.textContent = "skiped :" + skipTotal;
