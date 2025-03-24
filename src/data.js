@@ -23,7 +23,7 @@ export const quizData = {
       },
       correct: 'b',
       selected: null,
-      backgroundImage: "images/JonSnow.jpg",
+      backgroundImage: "images/Iron Throne.jpg",
       links: [
         {
           text: 'History of Aegon the Conqueror',
@@ -41,7 +41,7 @@ export const quizData = {
       },
       correct: 'd',
       selected: null,
-      backgroundImage: "src/images/JonSnow.jpg",
+      backgroundImage: "images/Jon Snow.jpg",
       links: [
         {
           text: 'The truth behind Jon Snow’s parentage',
@@ -59,7 +59,7 @@ export const quizData = {
       },
       correct: 'a',
       selected: null,
-      backgroundImage: "images/JonSnow.jpg",
+      backgroundImage: "images/House of Stark.jpg",
       links: [
         {
           text: 'House Stark and their legacy',
@@ -77,7 +77,7 @@ export const quizData = {
       },
       correct: 'b',
       selected: null,
-      backgroundImage: "images/JonSnow.jpg",
+      backgroundImage: "images/Arya Stark.jpg",
       links: [
         {
           text: 'Arya Stark’s deadly weapon',
@@ -96,7 +96,7 @@ export const quizData = {
       },
       correct: 'a',
       selected: null,
-      backgroundImage: "images/JonSnow.jpg",
+      backgroundImage: "images/Bran Stark.jpg",
       links: [
         {
           text: 'Why Bran Stark was chosen as king',
@@ -114,7 +114,7 @@ export const quizData = {
       },
       correct: 'c',
       selected: null,
-      backgroundImage: "images/JonSnow.jpg",
+      backgroundImage: "images/Night King.jpg",
       links: [
         {
           text: 'The fall of the Night King',
@@ -132,7 +132,7 @@ export const quizData = {
       },
       correct: 'b',
       selected: null,
-      backgroundImage: "images/JonSnow.jpg",
+      backgroundImage: "images/Drogon.jpg",
       links: [
         {
           text: 'Daenerys’ bond with Drogon',
@@ -150,7 +150,7 @@ export const quizData = {
       },
       correct: 'a',
       selected: null,
-      backgroundImage: "images/JonSnow.jpg",
+      backgroundImage: "images/White Walkers.jpg",
       links: [
         {
           text: 'The origins of the White Walkers',
@@ -168,7 +168,7 @@ export const quizData = {
       },
       correct: 'c',
       selected: null,
-      backgroundImage: "images/JonSnow.jpg",
+      backgroundImage: "images/scorpion crossbow.jpg",
       links: [
         {
           text: 'The Scorpion’s role in warfare',
@@ -187,7 +187,7 @@ export const quizData = {
       },
       correct: 'd',
       selected: null,
-      backgroundImage: "images/JonSnow.jpg",
+      backgroundImage: "images/ice.jpg",
       links: [
         {
           text: 'House Stark’s legendary sword',

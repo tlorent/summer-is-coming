@@ -33,6 +33,7 @@ export const initQuestionPage = (userName) => {
   userInterface.innerHTML = '';
 
   const el = document.createElement('h2');
+  el.classList.add("player__text")
   el.textContent = `Player: ${userName}`;
   userInterface.prepend(el);
 
