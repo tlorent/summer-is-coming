@@ -167,31 +167,33 @@ button:hover,
 
 .correct-answer-text {
   color: rgba(0, 128, 0, 0.828);
-  font-size: 8px;
+  font-size: 14px;
 }
 
 .wrong-answer-text {
   color: rgb(197, 17, 17);
-  font-size: 8px;
+  font-size: 14px;
 }
 
 .question-text {
   font-weight: bold;
-  font-size: 10px;
-  padding-top: 20px;
+  font-size: 14px;
+  padding-top: 15px;
 }
 
 #welcome-quiz-button {
-margin-top: 40px;
+margin-top: 10px;
 }
 
 .show_results {
   padding: 0;
   margin: 0;
-  padding-bottom: 50px;
 }
 
 .need__name::placeholder {
   color: red;
+}
 
+#answers-result-button {
+  display: inline;
 }

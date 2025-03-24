@@ -16,13 +16,18 @@ let skipTotal = 0;
 
 export let resultsArray = [];
 
-
 export const initQuestionPage = (userName) => {
   clearHint();
 
   const savedQuestionIndex = localStorage.getItem('currentQuestion');
+  const savedSkipTotal = localStorage.getItem('skipTotal');
+  const savedCorrectAnswerTotal = localStorage.getItem('correctAnswerTotal');
+  const savedResultsArray = JSON.parse(localStorage.getItem('resultsArray')) || [];
   if (savedQuestionIndex) {
     quizData.currentQuestionIndex = JSON.parse(savedQuestionIndex);
+    correctAnswerTotal = savedCorrectAnswerTotal;
+    skipTotal = savedSkipTotal;
+    resultsArray = savedResultsArray;
   } else {
     quizData.currentQuestionIndex = 0;
   }
@@ -73,12 +78,13 @@ export const initQuestionPage = (userName) => {
       const newCurrentQuestion = updateQuestion(quizData.currentQuestionIndex, {
         selected: userChoice,
       });
-      const anwerForResult = {
+      const answerForResult = {
         step: quizData.currentQuestionIndex,
         correct: newCurrentQuestion.correct,
         selected: newCurrentQuestion.selected
       };
-      resultsArray.push(anwerForResult);
+      resultsArray.push(answerForResult);
+      localStorage.setItem('resultsArray', JSON.stringify(resultsArray));
 
       if (newCurrentQuestion.selected !== currentQuestion.correct) {
         answerElement.classList.remove('button');
@@ -120,8 +126,14 @@ export const initQuestionPage = (userName) => {
     .addEventListener('click', () => {
       //added logic with condition for skipping question and going to result page after last question (nik)
       skipTotal++;
+
+      localStorage.setItem(
+        'skipTotal',
+        JSON.stringify(skipTotal)
+      );
+
       if (quizData.currentQuestionIndex === quizData.questions.length - 1) {
-        initResultatPage(userName, correctAnswerTotal, skipTotal);
+        initResultatPage(userName, savedCorrectAnswerTotal, savedSkipTotal);
       } else {
         nextQuestion(userName, 'skip');
       }
@@ -134,7 +146,7 @@ export const initQuestionPage = (userName) => {
     resultButton.addEventListener('click', () => {
       const resultButton = document.getElementById(RESULTAT_BUTTON_ID);
       resultButton.style.display = 'none';
-      initResultatPage(userName, correctAnswerTotal, skipTotal);
+      initResultatPage(userName, savedCorrectAnswerTotal, savedSkipTotal);
     });
   }
 };

@@ -4,7 +4,7 @@ import { initQuestionPage } from './questionPage.js';
 import { quizData } from '../data.js';
 import { clearHint, showHint, updateQuestion } from '../helper.js';
 
-let userName = '';
+export let userName = '';
 
 export const initWelcomePage = () => {
   // Check if there's a saved user name and current question index in localStorage
