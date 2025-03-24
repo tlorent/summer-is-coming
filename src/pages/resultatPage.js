@@ -11,7 +11,7 @@ import { resultsArray } from './questionPage.js';
 import { userAnswersPage } from './userAnswersPage.js';
 import { userName } from './welcomePage.js';
 
-export const initResultatPage = (userName, correctAnswerTotal, skipTotal) => {
+export const initResultatPage = (correctAnswerTotal) => {
   clearHint();
   const userInterface = document.getElementById(USER_INTERFACE_ID);
   userInterface.innerHTML = '';
@@ -19,20 +19,21 @@ export const initResultatPage = (userName, correctAnswerTotal, skipTotal) => {
   const resultatElement = createResultatElement();
   userInterface.appendChild(resultatElement);
 
+
+  const userName = localStorage.getItem('userName') || 'Player';
   const title = document.querySelector('.title');
   title.textContent = `${userName}, you did this!`;
 
   const gif = document.querySelector('.gif__result');
 
   const correctAnswers = resultatElement.querySelector('.correct_answers');
-  correctAnswers.textContent = 'correct :' + correctAnswerTotal;
+
+  correctAnswers.textContent = `correct : ${localStorage.getItem('correctAnswerTotal') || 0}`;
+  // to get correctAnswerTotal  you can get it from local storage here "localStorage.getItem("correctAnswerTotal")"
 
   const skipedAnswers = resultatElement.querySelector('.skiped_answers');
-  if (skipedAnswers.textContent === null) {
-    skipTotal = 0;
-  } else {
-    skipedAnswers.textContent = 'skiped :' + skipTotal;
-  }
+  skipedAnswers.textContent = `skipped : ${localStorage.getItem('skipTotal') || 0}`;
+
 
   const result = resultatElement.querySelector('.result__content');
 

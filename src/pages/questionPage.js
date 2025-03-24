@@ -35,7 +35,12 @@ export const initQuestionPage = (userName) => {
   if (quizData.currentQuestionIndex === 0) {
     correctAnswerTotal = 0;
     skipTotal = 0;
-  }
+  };
+
+  if (quizData.currentQuestionIndex >= 10) {
+    initResultatPage(userName, correctAnswerTotal, skipTotal); // или ваша функция для результатов
+    return;
+  };
 
   const userInterface = document.getElementById(USER_INTERFACE_ID);
   userInterface.innerHTML = '';
@@ -113,28 +118,51 @@ export const initQuestionPage = (userName) => {
           el.classList.add('correct-answer');
         }
       });
+      const skipButton = document.getElementById(SKIP_QUESTION_BUTTON_ID);
+      skipButton.style.display = 'none'; 
     };
 
     answerElement.addEventListener('click', checkAnswer);
   });
 
   document
+    .getElementById(RESULTAT_BUTTON_ID)
+    .addEventListener('click', () => {
+      // increasing the question index
+      quizData.currentQuestionIndex++;
+      localStorage.setItem(
+        'currentQuestion',
+        JSON.stringify(quizData.currentQuestionIndex)
+      );
+
+      // If this is the last question, we immediately show the result
+      if (quizData.currentQuestionIndex >= 10) {
+        initResultatPage(userName, correctAnswerTotal, skipTotal);
+      } else {
+        nextQuestion(userName, 'next');
+      }
+    });
+
+  document
     .getElementById(NEXT_QUESTION_BUTTON_ID)
     .addEventListener('click', () => nextQuestion(userName, 'next'));
 
-  document
+    document
     .getElementById(SKIP_QUESTION_BUTTON_ID)
     .addEventListener('click', () => {
-      //added logic with condition for skipping question and going to result page after last question (nik)
+      // increasing the counter of missed questions
       skipTotal++;
-
-      localStorage.setItem(
+      localStorage.setItem('skipTotal', JSON.stringify(skipTotal));
+  
+      // If this is the last question, show the result
+      if (quizData.currentQuestionIndex === quizData.questions.length - 1) {
+        quizData.currentQuestionIndex++; 
+        localStorage.setItem('currentQuestion', JSON.stringify(quizData.currentQuestionIndex)); 
+        initResultatPage(userName, correctAnswerTotal, skipTotal); 
+        localStorage.setItem(
         'skipTotal',
         JSON.stringify(skipTotal)
       );
-
-      if (quizData.currentQuestionIndex === quizData.questions.length - 1) {
-        initResultatPage(userName, savedCorrectAnswerTotal, savedSkipTotal);
       } else {
         nextQuestion(userName, 'skip');
       }
@@ -145,6 +173,7 @@ export const initQuestionPage = (userName) => {
   if (quizData.currentQuestionIndex === quizData.questions.length - 1) {
     resultButton.style.display = 'inline';
     resultButton.addEventListener('click', () => {
+      quizData.currentQuestionIndex++;
       const resultButton = document.getElementById(RESULTAT_BUTTON_ID);
       resultButton.style.display = 'none';
       initResultatPage(userName, savedCorrectAnswerTotal, savedSkipTotal);
