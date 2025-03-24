@@ -10,21 +10,24 @@ import {resultsArray} from './questionPage.js';
 import {createAnswerElement} from '../views/answerView.js'
  
 export const initResultatPage = (userName, correctAnswerTotal, skipTotal) => {
-  clearHint()
+  clearHint();
   const userInterface = document.getElementById(USER_INTERFACE_ID);
-  userInterface.innerHTML = ''; 
+  userInterface.innerHTML = '';
 
-  const resultatElement = createResultatElement(); 
-  userInterface.appendChild(resultatElement); 
+  const resultatElement = createResultatElement();
+  userInterface.appendChild(resultatElement);
 
   const title = document.querySelector('.title');
   title.textContent = `${userName}, you did this!`;
 
   const correctAnswers = resultatElement.querySelector('.correct_answers');
-  correctAnswers.textContent = "correct :" + correctAnswerTotal;
+  correctAnswers.textContent = `correct : ${localStorage.getItem(
+    'correctAnswerTotal'
+  )}`;
+  // to get correctAnswerTotal  you can get it from local storage here "localStorage.getItem("correctAnswerTotal")"
 
   const skipedAnswers = resultatElement.querySelector('.skiped_answers');
-  skipedAnswers.textContent = "skiped :" + skipTotal;
+  skipedAnswers.textContent = 'skiped :' + skipTotal;
 
   const result = resultatElement.querySelector('.result__content');
 
@@ -80,5 +83,8 @@ resultsArray.forEach((element) => {
 
 const startQuiz = () => {
   quizData.currentQuestionIndex = 0;
+  localStorage.setItem('correctAnswerTotal', 0);
+  localStorage.setItem('currentQuestion', 0);
+  quizData.questions.forEach((question) => (question.selected = null));
   initWelcomePage();
 };
