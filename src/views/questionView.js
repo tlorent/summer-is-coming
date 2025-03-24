@@ -2,6 +2,7 @@ import { ANSWERS_LIST_ID } from '../constants.js';
 import {
   NEXT_QUESTION_BUTTON_ID,
   SKIP_QUESTION_BUTTON_ID,
+  QUIZ_TRACKER_SECTION,
 } from '../constants.js';
 import { RESULTAT_BUTTON_ID } from '../constants.js';
 
@@ -15,6 +16,7 @@ export const createQuestionElement = (question) => {
 
   // I use String.raw just to get fancy colors for the HTML in VS Code.
   element.innerHTML = String.raw`
+   <div id=${QUIZ_TRACKER_SECTION}></div>
   <div class="question-text">
     <h1>${question.text}</h1>
   </div>
@@ -27,7 +29,7 @@ export const createQuestionElement = (question) => {
     </div>
   </div>
   <div class="question-buttons-row">
-    <button id="${SKIP_QUESTION_BUTTON_ID}" tooltip="Skip question"><img src="./images/skip.png" width="35" height = "35"></button>
+    <button id="${SKIP_QUESTION_BUTTON_ID}" ="Skip question"><img src="./images/skip.png" width="35" height = "35"></button>
     <button id="${NEXT_QUESTION_BUTTON_ID}" tooltip="Next button"><img src="./images/next.png" width="35" height = "35"></button>
     <button id="${RESULTAT_BUTTON_ID}" tooltip="Result button"><img src="./images/mission.png" width="35" height = "30"></button>
   </div>
