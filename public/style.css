@@ -275,13 +275,17 @@ button:hover,
 .correct_answers {
   color: green;
   font-weight: bold;
-  font-size: 32px;
+  font-size: 26px;
+  padding: 0;
+  margin: 0;
 }
 
 .skiped_answers {
   color: orange;
   font-weight: bold;
-  font-size: 28px;
+  font-size: 20px;
+  padding: 0;
+  margin: 0;
 }
 .helperText {
   background-color: rgb(158, 71, 71);
@@ -289,11 +293,41 @@ button:hover,
 }
 
 .result__content {
-  padding-bottom: 50px;
+  padding-bottom: 20px;
+}
+
+.correct-answer-text {
+  color: rgba(0, 128, 0, 0.828);
+  font-size: 14px;
+}
+
+.wrong-answer-text {
+  color: rgb(197, 17, 17);
+  font-size: 14px;
+}
+
+.question-text {
+  font-weight: bold;
+  font-size: 14px;
+  padding-top: 15px;
+}
+
+#welcome-quiz-button {
+margin-top: 10px;
+}
+
+.show_results {
+  padding: 0;
+  margin: 0;
 }
 
 .need__name::placeholder {
   color: red;
+}
+
+
+#answers-result-button {
+  display: inline;
 }
 
 .player__text {
@@ -395,5 +429,3 @@ button[tooltip]::after {
 button[tooltip]:hover::after {
   opacity: 1;
 }
-
-

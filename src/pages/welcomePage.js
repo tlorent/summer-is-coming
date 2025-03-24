@@ -4,7 +4,8 @@ import { initQuestionPage } from './questionPage.js';
 import { quizData } from '../data.js';
 import { clearHint, showHint, updateQuestion } from '../helper.js';
 
-let userName = '';
+
+export let userName = '';
 const userInterface = document.getElementById(USER_INTERFACE_ID);
 
 export const initWelcomePage = () => {
