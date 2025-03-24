@@ -13,6 +13,7 @@ export const createResultatElement = () => {
     <h2 class="title"></h2>
     <div class="correct_answers"></div>
     <p class="skiped_answers"></p>
+        <img class="gif__result" />
     <div class="result__content"></div>
     </div>
     <button id="${WELCOME_BUTTON_ID}">Start Quiz again</button>

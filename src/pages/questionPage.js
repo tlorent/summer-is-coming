@@ -41,6 +41,7 @@ export const initQuestionPage = (userName) => {
   userInterface.innerHTML = '';
 
   const el = document.createElement('h2');
+  el.classList.add("player__text")
   el.textContent = `Player: ${userName}`;
   userInterface.prepend(el);
 
@@ -51,7 +52,7 @@ export const initQuestionPage = (userName) => {
     JSON.stringify(quizData.currentQuestionIndex)
   );
 
-  const questionElement = createQuestionElement(currentQuestion.text);
+  const questionElement = createQuestionElement(currentQuestion);
   userInterface.appendChild(questionElement);
 
   const answersListElement = document.getElementById(ANSWERS_LIST_ID);
