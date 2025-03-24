@@ -10,9 +10,8 @@ import { RESULTAT_BUTTON_ID } from '../constants.js';
  * @returns {Element}
  */
 export const createQuestionElement = (question) => {
-
   const element = document.createElement('div');
-  element.classList.add("main__block")
+  element.classList.add('main__block');
 
   // I use String.raw just to get fancy colors for the HTML in VS Code.
   element.innerHTML = String.raw`
