@@ -3,14 +3,14 @@ import {
   NEXT_QUESTION_BUTTON_ID,
   SKIP_QUESTION_BUTTON_ID,
   USER_INTERFACE_ID,
-  RESULTAT_BUTTON_ID,
+  RESULT_BUTTON_ID,
   QUIZ_TRACKER_SECTION,
 } from '../constants.js';
 import { createQuestionElement } from '../views/questionView.js';
 import { createAnswerElement } from '../views/answerView.js';
 import { quizData } from '../data.js';
-import { initResultatPage } from '../pages/resultatPage.js';
 import { clearHint, showHint, updateQuestion } from '../helper.js';
+import { initResultPage } from './resultPage.js';
 
 let correctAnswerTotal = 0;
 let skipTotal = 0;
@@ -40,7 +40,7 @@ export const initQuestionPage = (userName) => {
   }
 
   if (quizData.currentQuestionIndex >= 10) {
-    initResultatPage(userName, correctAnswerTotal, skipTotal); // или ваша функция для результатов
+    initResultPage(userName, correctAnswerTotal, skipTotal); 
     return;
   }
 
@@ -155,7 +155,7 @@ export const initQuestionPage = (userName) => {
     quizTracker.appendChild(questionCheck);
   });
 
-  document.getElementById(RESULTAT_BUTTON_ID).addEventListener('click', () => {
+  document.getElementById(RESULT_BUTTON_ID).addEventListener('click', () => {
     // increasing the question index
     quizData.currentQuestionIndex++;
     localStorage.setItem(
@@ -165,7 +165,7 @@ export const initQuestionPage = (userName) => {
 
     // If this is the last question, we immediately show the result
     if (quizData.currentQuestionIndex >= 10) {
-      initResultatPage(userName, correctAnswerTotal, skipTotal);
+      initResultPage(userName, correctAnswerTotal, skipTotal);
     } else {
       nextQuestion(userName, 'next');
     }
@@ -189,22 +189,22 @@ export const initQuestionPage = (userName) => {
           'currentQuestion',
           JSON.stringify(quizData.currentQuestionIndex)
         );
-        initResultatPage(userName, correctAnswerTotal, skipTotal);
+        initResultPage(userName, correctAnswerTotal, skipTotal);
         localStorage.setItem('skipTotal', JSON.stringify(skipTotal));
       } else {
         nextQuestion(userName, 'skip');
       }
     });
 
-  const resultButton = document.getElementById(RESULTAT_BUTTON_ID);
+  const resultButton = document.getElementById(RESULT_BUTTON_ID);
   resultButton.style.display = 'none';
   if (quizData.currentQuestionIndex === quizData.questions.length - 1) {
     resultButton.style.display = 'inline';
     resultButton.addEventListener('click', () => {
       quizData.currentQuestionIndex++;
-      const resultButton = document.getElementById(RESULTAT_BUTTON_ID);
+      const resultButton = document.getElementById(RESULT_BUTTON_ID);
       resultButton.style.display = 'none';
-      initResultatPage(userName, savedCorrectAnswerTotal, savedSkipTotal);
+      initResultPage(userName, savedCorrectAnswerTotal, savedSkipTotal);
     });
   }
 };

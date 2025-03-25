@@ -4,21 +4,21 @@ import {
   ANSWERS_BUTTON_ID,
 } from '../constants.js';
 import { initWelcomePage } from './welcomePage.js';
-import { createResultatElement } from '../views/resultatView.js';
+import { createResultElement } from '../views/resultView.js';
 import { quizData } from '../data.js';
 import { clearHint } from '../helper.js';
 import { resultsArray } from './questionPage.js';
 import { userAnswersPage } from './userAnswersPage.js';
 import { userName } from './welcomePage.js';
 
-export const initResultatPage = (correctAnswerTotal) => {
+export const initResultPage = (correctAnswerTotal) => {
   console.log(correctAnswerTotal);
   clearHint();
   const userInterface = document.getElementById(USER_INTERFACE_ID);
   userInterface.innerHTML = '';
 
-  const resultatElement = createResultatElement();
-  userInterface.appendChild(resultatElement);
+  const resultElement = createResultElement();
+  userInterface.appendChild(resultElement);
 
   const userName = localStorage.getItem('userName') || 'Player';
   const title = document.querySelector('.title');
@@ -26,19 +26,19 @@ export const initResultatPage = (correctAnswerTotal) => {
 
   const gif = document.querySelector('.gif__result');
 
-  const correctAnswers = resultatElement.querySelector('.correct_answers');
+  const correctAnswers = resultElement.querySelector('.correct_answers');
 
   correctAnswers.textContent = `correct : ${
     localStorage.getItem('correctAnswerTotal') || 0
   }`;
   // to get correctAnswerTotal  you can get it from local storage here "localStorage.getItem("correctAnswerTotal")"
 
-  const skipedAnswers = resultatElement.querySelector('.skiped_answers');
+  const skipedAnswers = resultElement.querySelector('.skiped_answers');
   skipedAnswers.textContent = `skipped : ${
     localStorage.getItem('skipTotal') || 0
   }`;
 
-  const result = resultatElement.querySelector('.result__content');
+  const result = resultElement.querySelector('.result__content');
 
   if (correctAnswerTotal <= 3) {
     result.textContent = `"You know nothing, Jon Snow!" Your knowledge of Westeros is as thin as the Night’s Watch rations. Time to rewatch the series or revisit the books!`;

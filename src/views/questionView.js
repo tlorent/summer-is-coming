@@ -4,7 +4,7 @@ import {
   SKIP_QUESTION_BUTTON_ID,
   QUIZ_TRACKER_SECTION,
 } from '../constants.js';
-import { RESULTAT_BUTTON_ID } from '../constants.js';
+import { RESULT_BUTTON_ID } from '../constants.js';
 
 /**
  * Create a full question element
@@ -31,7 +31,7 @@ export const createQuestionElement = (question) => {
   <div class="question-buttons-row">
     <button id="${SKIP_QUESTION_BUTTON_ID}" ="Skip question"><img src="./images/skip.png" width="35" height = "35"></button>
     <button id="${NEXT_QUESTION_BUTTON_ID}" tooltip="Next button"><img src="./images/next.png" width="35" height = "35"></button>
-    <button id="${RESULTAT_BUTTON_ID}" tooltip="Result button"><img src="./images/mission.png" width="35" height = "30"></button>
+    <button id="${RESULT_BUTTON_ID}" tooltip="Result button"><img src="./images/mission.png" width="35" height = "30"></button>
   </div>
 `;
 
