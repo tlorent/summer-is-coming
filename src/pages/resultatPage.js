@@ -64,10 +64,11 @@ export const initResultatPage = () => {
 
 const startQuiz = () => {
   localStorage.clear();
-  initWelcomePage();
+  initWelcomePage('playSoundAgain')
 };
 
 const answersPage = () => {
   updateCurrentQuestionIndexLS();
   userAnswersPage();
+  initWelcomePage('playSoundAgain')
 };

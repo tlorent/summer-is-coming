@@ -43,7 +43,7 @@ h1 {
   background: linear-gradient(135deg, #1a1a1a, #2e2e2e, #444444, #5c5c5c);
   box-shadow: 0 0 30px rgb(122, 122, 122);
   background-size: 400% 400%;
-  animation: gradientShift 10s ease infinite;
+  animation: gradientShift 25s ease infinite;
   background-size: 110%;
   background-repeat: no-repeat;
 }
@@ -52,10 +52,12 @@ h1 {
   display: flex;
   flex-direction: column;
   align-items: center;
+  background-size: 150% !important;
   justify-content: center;
   gap: 50px;
   background-image: url('../images/welcomePage.jpg') !important;
 }
+
 
 .main__block {
   display: flex;
@@ -165,6 +167,7 @@ button {
   gap: 2rem;
   max-width: 1200px;
   margin: 0 auto;
+  margin-top: 40px;
 }
 
 .answers-column {
@@ -229,7 +232,7 @@ button:hover,
   align-items: center;
   justify-content: center;
   width: 40%;
-  height: 75px;
+  height: 100px;
   background-color: whitesmoke;
   border-radius: 12px;
   padding: 10px;
@@ -315,6 +318,7 @@ button:hover,
 #answers-result-button {
   display: inline;
   color: black;
+  margin-inline-start: 20px;
 }
 
 .player__text {
@@ -386,6 +390,13 @@ button {
 #welcome-quiz-button {
   margin: 0 auto !important;
   color: black !important;
+  display: inline;
+  margin-top: 10px;
+}
+
+.welcome-background {
+  background-color: black !important;
+  background-image: none !important;
 }
 
 button[tooltip] {
@@ -465,14 +476,14 @@ button[tooltip]:hover::after {
 }
 
 .question-check-box.correct-answered {
-  background: #48cfcb;
+  background: #00BFFF;
 }
 .question-check-box.wrong-answered {
-  background: #d72638;
+  background: #FF4500;
 }
 
 .question-check-box.skipped {
-  background: #c78a00;
+  background: #708090;
 }
 
 .question-check-box.active {

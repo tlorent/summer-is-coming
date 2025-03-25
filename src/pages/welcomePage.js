@@ -7,7 +7,14 @@ import { getQuizDataLS, showHint } from '../helper.js';
 export let userName = '';
 const userInterface = document.getElementById(USER_INTERFACE_ID);
 
-export const initWelcomePage = () => {
+export const initWelcomePage = (playSoundAgain) => {
+  document.body.classList.add('welcome-background')
+  if (playSoundAgain) {
+    const soundWelcomeButton = document.querySelector('.sound__button')
+    const audioWelcome = document.querySelector('.music')
+    audioWelcome.remove()
+    soundWelcomeButton.remove()
+  }
   // Check if there's a saved user name and current question index in localStorage
   const savedUserName = localStorage.getItem('userName');
   const quizDataLs = getQuizDataLS();
@@ -17,8 +24,10 @@ export const initWelcomePage = () => {
     initQuestionPage(); // Start quiz from the saved state
     return; // Exit early to avoid showing the welcome page
   }
-
+  
   userInterface.classList.add('background__welcome');
+
+  
   userInterface.innerHTML = '';
 
   let isPlaying = true;
@@ -98,7 +107,6 @@ export const initWelcomePage = () => {
 
 const startQuiz = () => {
   localStorage.setItem('quizDataLS', JSON.stringify(quizData));
-  userInterface.classList.remove('background__welcome');
   if (userName.trim().length < 1) {
     document.querySelector('.input__name').classList.add('need__name');
     const helperText = showHint(
@@ -108,6 +116,7 @@ const startQuiz = () => {
     document.querySelector('body').appendChild(helperText);
     return;
   } else {
+    userInterface.classList.remove('background__welcome');
     initQuestionPage();
   }
 };
