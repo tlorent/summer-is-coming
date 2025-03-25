@@ -157,12 +157,6 @@ button {
   margin: 2rem auto;
 }
 
-.question-text {
-  text-align: center;
-  margin: 2rem auto;
-  color: black;
-}
-
 .question-bottom {
   display: flex;
   flex-direction: row-reverse;
@@ -284,19 +278,24 @@ button:hover,
 }
 
 .correct-answer-text {
-  color: rgba(0, 128, 0, 0.828);
-  font-size: 14px;
+  display: inline;
+  color: rgba(108, 246, 108, 0.828);
+  font-size: 16px;
 }
 
 .wrong-answer-text {
-  color: rgb(197, 17, 17);
-  font-size: 14px;
+  display: inline;
+  color: rgb(253, 108, 108);
+  font-size: 16px;
+  padding-right: 20px;
 }
 
 .question-text {
   font-weight: bold;
   font-size: 14px;
-  padding-top: 15px;
+  text-align: center;
+  color: rgb(255, 254, 254);
+  padding-top: 15px; 
 }
 
 #welcome-quiz-button {
@@ -306,6 +305,7 @@ button:hover,
 .show_results {
   padding: 0;
   margin: 0;
+  padding-bottom: 10px;
 }
 
 .need__name::placeholder {
@@ -314,6 +314,7 @@ button:hover,
 
 #answers-result-button {
   display: inline;
+  color: black;
 }
 
 .player__text {
@@ -412,6 +413,11 @@ button[tooltip]::after {
 button[tooltip]:hover::after {
   opacity: 1;
 }
+
+.title {
+  color: white;
+}
+
 .question-section {
   display: flex;
   flex-direction: column;
@@ -500,3 +506,4 @@ button[tooltip]:hover::after {
     transform: scale(1);
   }
 }
+
