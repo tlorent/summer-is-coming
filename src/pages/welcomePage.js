@@ -7,27 +7,25 @@ import { getQuizDataLS, showHint } from '../helper.js';
 export let userName = '';
 const userInterface = document.getElementById(USER_INTERFACE_ID);
 
-export const initWelcomePage = (playSoundAgain) => {
-  document.body.classList.add('welcome-background')
-  if (playSoundAgain) {
-    const soundWelcomeButton = document.querySelector('.sound__button')
-    const audioWelcome = document.querySelector('.music')
-    audioWelcome.remove()
-    soundWelcomeButton.remove()
-  }
-  // Check if there's a saved user name and current question index in localStorage
+export const initWelcomePage = () => {
+  document.body.classList.add('welcome-background');
+  //thiss cuase a bug => i mean theat start quiz again broken because of that i do not why!
+  // if (playSoundAgain) {
+  //   const soundWelcomeButton = document.querySelector('.sound__button');
+  //   const audioWelcome = document.querySelector('.music');
+  //   audioWelcome.remove();
+  //   soundWelcomeButton.remove();
+  // }
   const savedUserName = localStorage.getItem('userName');
   const quizDataLs = getQuizDataLS();
 
   if (savedUserName && quizDataLs !== '{}') {
-    // If both are saved, load the quiz directly without showing the welcome page
-    initQuestionPage(); // Start quiz from the saved state
-    return; // Exit early to avoid showing the welcome page
+    initQuestionPage();
+    return;
   }
-  
+
   userInterface.classList.add('background__welcome');
 
-  
   userInterface.innerHTML = '';
 
   let isPlaying = true;

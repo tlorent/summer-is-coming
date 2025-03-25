@@ -1,14 +1,11 @@
 import { SKIP_QUESTION_BUTTON_ID } from './constants.js';
-import { quizData } from './data.js';
+// import { quizData } from './data.js';
 
 // I add a new file that we can put the helper functions
 export const getQuizDataLS = () => {
   const quizDataLS = localStorage.getItem('quizDataLS');
   if (quizDataLS) {
     return JSON.parse(quizDataLS);
-  } else {
-    localStorage.setItem('quizDataLS', JSON.stringify(quizData));
-    return quizData;
   }
 };
 
