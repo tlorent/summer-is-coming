@@ -4,7 +4,6 @@ import { initQuestionPage } from './questionPage.js';
 import { quizData } from '../data.js';
 import { clearHint, showHint, updateQuestion } from '../helper.js';
 
-
 export let userName = '';
 const userInterface = document.getElementById(USER_INTERFACE_ID);
 
@@ -115,7 +114,6 @@ const startQuiz = () => {
       'currentQuestion',
       JSON.stringify(quizData.currentQuestionIndex)
     );
-
     initQuestionPage(userName);
     quizData.questions.forEach((question) => (question.selected = null));
   }

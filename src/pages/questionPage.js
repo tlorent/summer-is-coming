@@ -4,6 +4,7 @@ import {
   SKIP_QUESTION_BUTTON_ID,
   USER_INTERFACE_ID,
   RESULTAT_BUTTON_ID,
+  QUIZ_TRACKER_SECTION,
 } from '../constants.js';
 import { createQuestionElement } from '../views/questionView.js';
 import { createAnswerElement } from '../views/answerView.js';
@@ -22,7 +23,8 @@ export const initQuestionPage = (userName) => {
   const savedQuestionIndex = localStorage.getItem('currentQuestion');
   const savedSkipTotal = localStorage.getItem('skipTotal');
   const savedCorrectAnswerTotal = localStorage.getItem('correctAnswerTotal');
-  const savedResultsArray = JSON.parse(localStorage.getItem('resultsArray')) || [];
+  const savedResultsArray =
+    JSON.parse(localStorage.getItem('resultsArray')) || [];
   if (savedQuestionIndex) {
     quizData.currentQuestionIndex = JSON.parse(savedQuestionIndex);
     correctAnswerTotal = savedCorrectAnswerTotal;
@@ -35,18 +37,18 @@ export const initQuestionPage = (userName) => {
   if (quizData.currentQuestionIndex === 0) {
     correctAnswerTotal = 0;
     skipTotal = 0;
-  };
+  }
 
   if (quizData.currentQuestionIndex >= 10) {
     initResultatPage(userName, correctAnswerTotal, skipTotal); // или ваша функция для результатов
     return;
-  };
+  }
 
   const userInterface = document.getElementById(USER_INTERFACE_ID);
   userInterface.innerHTML = '';
 
   const el = document.createElement('h2');
-  el.classList.add("player__text")
+  el.classList.add('player__text');
   el.textContent = `Player: ${userName}`;
   userInterface.prepend(el);
 
@@ -87,7 +89,7 @@ export const initQuestionPage = (userName) => {
       const answerForResult = {
         step: quizData.currentQuestionIndex,
         correct: newCurrentQuestion.correct,
-        selected: newCurrentQuestion.selected
+        selected: newCurrentQuestion.selected,
       };
       resultsArray.push(answerForResult);
       localStorage.setItem('resultsArray', JSON.stringify(resultsArray));
@@ -119,50 +121,76 @@ export const initQuestionPage = (userName) => {
         }
       });
       const skipButton = document.getElementById(SKIP_QUESTION_BUTTON_ID);
-      skipButton.style.display = 'none'; 
+      skipButton.style.display = 'none';
     };
 
     answerElement.addEventListener('click', checkAnswer);
   });
+  const quizTracker = document.getElementById(QUIZ_TRACKER_SECTION);
+  quizTracker.classList.add('quiz-tracker-div');
 
-  document
-    .getElementById(RESULTAT_BUTTON_ID)
-    .addEventListener('click', () => {
-      // increasing the question index
-      quizData.currentQuestionIndex++;
-      localStorage.setItem(
-        'currentQuestion',
-        JSON.stringify(quizData.currentQuestionIndex)
-      );
+  const { questions } = quizData;
 
-      // If this is the last question, we immediately show the result
-      if (quizData.currentQuestionIndex >= 10) {
-        initResultatPage(userName, correctAnswerTotal, skipTotal);
-      } else {
-        nextQuestion(userName, 'next');
-      }
-    });
+  questions.forEach((question, index) => {
+    const questionCheck = document.createElement('div');
+    questionCheck.classList.add('question-check-box');
+    if (index === quizData.currentQuestionIndex) {
+      questionCheck.classList.add('active');
+    }
+
+    const { skipped, selected } = question;
+
+    if (selected) {
+      questionCheck.classList.add('answered');
+    }
+
+    if (skipped) {
+      questionCheck.classList.add('skipped');
+    }
+    // when the user click the button it should display the question ,, i have a problem that i can not access the user name
+    // questionCheck.addEventListener('click', () => {
+    //   quizData.currentQuestionIndex = index;
+    //   initQuestionPage();
+    // });
+    quizTracker.appendChild(questionCheck);
+  });
+
+  document.getElementById(RESULTAT_BUTTON_ID).addEventListener('click', () => {
+    // increasing the question index
+    quizData.currentQuestionIndex++;
+    localStorage.setItem(
+      'currentQuestion',
+      JSON.stringify(quizData.currentQuestionIndex)
+    );
+
+    // If this is the last question, we immediately show the result
+    if (quizData.currentQuestionIndex >= 10) {
+      initResultatPage(userName, correctAnswerTotal, skipTotal);
+    } else {
+      nextQuestion(userName, 'next');
+    }
+  });
 
   document
     .getElementById(NEXT_QUESTION_BUTTON_ID)
     .addEventListener('click', () => nextQuestion(userName, 'next'));
 
-    document
+  document
     .getElementById(SKIP_QUESTION_BUTTON_ID)
     .addEventListener('click', () => {
       // increasing the counter of missed questions
       skipTotal++;
       localStorage.setItem('skipTotal', JSON.stringify(skipTotal));
-  
+
       // If this is the last question, show the result
       if (quizData.currentQuestionIndex === quizData.questions.length - 1) {
-        quizData.currentQuestionIndex++; 
-        localStorage.setItem('currentQuestion', JSON.stringify(quizData.currentQuestionIndex)); 
-        initResultatPage(userName, correctAnswerTotal, skipTotal); 
+        quizData.currentQuestionIndex++;
         localStorage.setItem(
-        'skipTotal',
-        JSON.stringify(skipTotal)
-      );
+          'currentQuestion',
+          JSON.stringify(quizData.currentQuestionIndex)
+        );
+        initResultatPage(userName, correctAnswerTotal, skipTotal);
+        localStorage.setItem('skipTotal', JSON.stringify(skipTotal));
       } else {
         nextQuestion(userName, 'skip');
       }
@@ -185,6 +213,9 @@ export const initQuestionPage = (userName) => {
 const nextQuestion = (userName, eventType) => {
   const currentQuestion = quizData.questions[quizData.currentQuestionIndex];
 
+  if (eventType === 'skip') {
+    updateQuestion(quizData.currentQuestionIndex, { skipped: true });
+  }
   if (eventType === 'next' && !currentQuestion.selected) {
     const helperText = showHint(
       ['hint', 'helperText'],
