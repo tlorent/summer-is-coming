@@ -7,7 +7,14 @@ import { getQuizDataLS, showHint } from '../helper.js';
 export let userName = '';
 const userInterface = document.getElementById(USER_INTERFACE_ID);
 
-export const initWelcomePage = () => {
+export const initWelcomePage = (playSoundAgain) => {
+  document.body.classList.add('welcome-background')
+  if (playSoundAgain) {
+    const soundWelcomeButton = document.querySelector('.sound__button')
+    const audioWelcome = document.querySelector('.music')
+    audioWelcome.remove()
+    soundWelcomeButton.remove()
+  }
   // Check if there's a saved user name and current question index in localStorage
   const savedUserName = localStorage.getItem('userName');
   const quizDataLs = getQuizDataLS();

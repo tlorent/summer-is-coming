@@ -22,6 +22,7 @@ import { userAnswersPage } from './userAnswersPage.js';
 
 export const initQuestionPage = () => {
   clearHint();
+  document.body.classList.remove('welcome-background')
   const quizDataLS = getQuizDataLS();
   const userName = localStorage.getItem('userName');
 
