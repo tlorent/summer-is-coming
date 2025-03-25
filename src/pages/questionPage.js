@@ -8,56 +8,42 @@ import {
 } from '../constants.js';
 import { createQuestionElement } from '../views/questionView.js';
 import { createAnswerElement } from '../views/answerView.js';
-import { quizData } from '../data.js';
 import { initResultatPage } from '../pages/resultatPage.js';
-import { clearHint, showHint, updateQuestion } from '../helper.js';
+import {
+  checkAnswer,
+  clearHint,
+  getQuizDataLS,
+  initiateAnswer,
+  showHint,
+  updateCurrentQuestionIndexLS,
+  updateQuestion,
+} from '../helper.js';
+import { userAnswersPage } from './userAnswersPage.js';
 
-let correctAnswerTotal = 0;
-let skipTotal = 0;
-
-export let resultsArray = [];
-
-export const initQuestionPage = (userName) => {
+export const initQuestionPage = () => {
   clearHint();
+  const quizDataLS = getQuizDataLS();
+  const userName = localStorage.getItem('userName');
 
-  const savedQuestionIndex = localStorage.getItem('currentQuestion');
-  const savedSkipTotal = localStorage.getItem('skipTotal');
-  const savedCorrectAnswerTotal = localStorage.getItem('correctAnswerTotal');
-  const savedResultsArray =
-    JSON.parse(localStorage.getItem('resultsArray')) || [];
-  if (savedQuestionIndex) {
-    quizData.currentQuestionIndex = JSON.parse(savedQuestionIndex);
-    correctAnswerTotal = savedCorrectAnswerTotal;
-    skipTotal = savedSkipTotal;
-    resultsArray = savedResultsArray;
-  } else {
-    quizData.currentQuestionIndex = 0;
+  if (quizDataLS.currentQuestionIndex === quizDataLS.questions.length) {
+    initResultatPage();
+    return;
   }
 
-  if (quizData.currentQuestionIndex === 0) {
-    correctAnswerTotal = 0;
-    skipTotal = 0;
-  }
-
-  if (quizData.currentQuestionIndex >= 10) {
-    initResultatPage(userName, correctAnswerTotal, skipTotal); // или ваша функция для результатов
+  if (quizDataLS.currentQuestionIndex === quizDataLS.questions.length + 1) {
+    userAnswersPage();
     return;
   }
 
   const userInterface = document.getElementById(USER_INTERFACE_ID);
   userInterface.innerHTML = '';
 
-  const el = document.createElement('h2');
-  el.classList.add('player__text');
-  el.textContent = `Player: ${userName}`;
-  userInterface.prepend(el);
+  const userNameElement = document.createElement('h2');
+  userNameElement.classList.add('player__text');
+  userNameElement.textContent = `Player: ${userName}`;
+  userInterface.prepend(userNameElement);
 
-  const currentQuestion = quizData.questions[quizData.currentQuestionIndex];
-
-  localStorage.setItem(
-    'currentQuestion',
-    JSON.stringify(quizData.currentQuestionIndex)
-  );
+  const currentQuestion = quizDataLS.questions[quizDataLS.currentQuestionIndex];
 
   const questionElement = createQuestionElement(currentQuestion);
   userInterface.appendChild(questionElement);
@@ -73,148 +59,88 @@ export const initQuestionPage = (userName) => {
       return answerElement;
     }
   );
-
   answersListElements.forEach((answerElement) => {
-    const checkAnswer = () => {
-      const currentQuestion = quizData.questions[quizData.currentQuestionIndex];
-      if (currentQuestion.selected) return;
-      answersListElements.forEach((answerElement) => {
-        answerElement.classList.remove('correct-answer', 'wrong-answer');
-      });
-      const { key: userChoice } = answerElement.dataset;
-
-      const newCurrentQuestion = updateQuestion(quizData.currentQuestionIndex, {
-        selected: userChoice,
-      });
-      const answerForResult = {
-        step: quizData.currentQuestionIndex,
-        correct: newCurrentQuestion.correct,
-        selected: newCurrentQuestion.selected,
-      };
-      resultsArray.push(answerForResult);
-      localStorage.setItem('resultsArray', JSON.stringify(resultsArray));
-
-      if (newCurrentQuestion.selected !== currentQuestion.correct) {
-        answerElement.classList.remove('button');
-        answerElement.classList.add('wrong-answer');
-
-        const hint = showHint(
-          ['hint'],
-          `Hint: ${newCurrentQuestion.links[0].text}`,
-          newCurrentQuestion.links[0].href
-        );
-        document.querySelector('body').appendChild(hint);
-      } else {
-        answerElement.classList.remove('button');
-        answerElement.classList.add('correct-answer');
-        correctAnswerTotal++;
-        localStorage.setItem(
-          'correctAnswerTotal',
-          JSON.stringify(correctAnswerTotal)
-        );
-      }
-      answersListElements.forEach((el) => {
-        const { key } = el.dataset;
-        if (key === newCurrentQuestion.correct) {
-          el.classList.remove('button');
-          el.classList.add('correct-answer');
-        }
-      });
-      const skipButton = document.getElementById(SKIP_QUESTION_BUTTON_ID);
-      skipButton.style.display = 'none';
-    };
-
-    answerElement.addEventListener('click', checkAnswer);
+    initiateAnswer(currentQuestion, answerElement);
+    answerElement.addEventListener('click', () =>
+      checkAnswer(answersListElements, answerElement)
+    );
   });
   const quizTracker = document.getElementById(QUIZ_TRACKER_SECTION);
   quizTracker.classList.add('quiz-tracker-div');
 
-  const { questions } = quizData;
+  const { questions } = quizDataLS;
 
   questions.forEach((question, index) => {
     const questionCheck = document.createElement('div');
     questionCheck.classList.add('question-check-box');
-    if (index === quizData.currentQuestionIndex) {
+
+    if (index === quizDataLS.currentQuestionIndex) {
       questionCheck.classList.add('active');
     }
+    const { skipped, selected, correct } = question;
 
-    const { skipped, selected } = question;
-
-    if (selected) {
-      questionCheck.classList.add('answered');
+    if (selected === correct) {
+      questionCheck.classList.add('correct-answered');
     }
-
+    if (selected && selected !== correct) {
+      questionCheck.classList.add('wrong-answered');
+    }
     if (skipped) {
       questionCheck.classList.add('skipped');
+      // when the user click the button it should display the question
+      questionCheck.addEventListener('click', () => {
+        quizDataLS.currentQuestionIndex = index;
+        initQuestionPage();
+      });
     }
-    // when the user click the button it should display the question ,, i have a problem that i can not access the user name
-    // questionCheck.addEventListener('click', () => {
-    //   quizData.currentQuestionIndex = index;
-    //   initQuestionPage();
-    // });
+
     quizTracker.appendChild(questionCheck);
   });
 
   document.getElementById(RESULTAT_BUTTON_ID).addEventListener('click', () => {
-    // increasing the question index
-    quizData.currentQuestionIndex++;
-    localStorage.setItem(
-      'currentQuestion',
-      JSON.stringify(quizData.currentQuestionIndex)
-    );
-
     // If this is the last question, we immediately show the result
-    if (quizData.currentQuestionIndex >= 10) {
-      initResultatPage(userName, correctAnswerTotal, skipTotal);
+    if (quizDataLS.currentQuestionIndex === quizDataLS.questions.length - 1) {
+      updateCurrentQuestionIndexLS();
+      initResultatPage();
     } else {
-      nextQuestion(userName, 'next');
+      nextQuestion('next');
     }
   });
 
   document
     .getElementById(NEXT_QUESTION_BUTTON_ID)
-    .addEventListener('click', () => nextQuestion(userName, 'next'));
+    .addEventListener('click', () => nextQuestion('next'));
 
   document
     .getElementById(SKIP_QUESTION_BUTTON_ID)
     .addEventListener('click', () => {
-      // increasing the counter of missed questions
-      skipTotal++;
-      localStorage.setItem('skipTotal', JSON.stringify(skipTotal));
-
       // If this is the last question, show the result
-      if (quizData.currentQuestionIndex === quizData.questions.length - 1) {
-        quizData.currentQuestionIndex++;
-        localStorage.setItem(
-          'currentQuestion',
-          JSON.stringify(quizData.currentQuestionIndex)
-        );
-        initResultatPage(userName, correctAnswerTotal, skipTotal);
-        localStorage.setItem('skipTotal', JSON.stringify(skipTotal));
+      if (quizDataLS.currentQuestionIndex === quizDataLS.questions.length) {
+        initResultatPage();
       } else {
-        nextQuestion(userName, 'skip');
+        nextQuestion('skip');
       }
     });
 
   const resultButton = document.getElementById(RESULTAT_BUTTON_ID);
   resultButton.style.display = 'none';
-  if (quizData.currentQuestionIndex === quizData.questions.length - 1) {
+  if (quizDataLS.currentQuestionIndex === quizDataLS.questions.length - 1) {
     resultButton.style.display = 'inline';
     resultButton.addEventListener('click', () => {
-      quizData.currentQuestionIndex++;
       const resultButton = document.getElementById(RESULTAT_BUTTON_ID);
       resultButton.style.display = 'none';
-      initResultatPage(userName, savedCorrectAnswerTotal, savedSkipTotal);
+      initResultatPage();
     });
   }
 };
 
 // Now nextQuestion function definition
-const nextQuestion = (userName, eventType) => {
-  const currentQuestion = quizData.questions[quizData.currentQuestionIndex];
+const nextQuestion = (eventType) => {
+  const quizDataLS = getQuizDataLS();
+  const currentQuestion = quizDataLS.questions[quizDataLS.currentQuestionIndex];
 
   if (eventType === 'skip') {
-    updateQuestion(quizData.currentQuestionIndex, { skipped: true });
+    updateQuestion(quizDataLS.currentQuestionIndex, { skipped: true });
   }
   if (eventType === 'next' && !currentQuestion.selected) {
     const helperText = showHint(
@@ -224,15 +150,12 @@ const nextQuestion = (userName, eventType) => {
     document.querySelector('body').appendChild(helperText);
     return;
   }
-
-  quizData.currentQuestionIndex = quizData.currentQuestionIndex + 1;
-  localStorage.setItem(
-    'currentQuestion',
-    JSON.stringify(quizData.currentQuestionIndex)
-  );
-  initQuestionPage(userName);
-
-  if (quizData.currentQuestionIndex === quizData.questions.length - 1) {
+  const newCureentIndexLs = updateCurrentQuestionIndexLS();
+  initQuestionPage();
+  if (
+    newCureentIndexLs.currentQuestionIndex >=
+    quizDataLS.questions.length - 1
+  ) {
     const nextQuestionButton = document.getElementById(NEXT_QUESTION_BUTTON_ID);
     nextQuestionButton.style.display = 'none';
   }

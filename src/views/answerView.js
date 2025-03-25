@@ -1,4 +1,4 @@
-import { quizData } from '../data.js';
+// import { quizData } from '../data.js';
 /**
  * Create an Answer element
  * @returns {Element}

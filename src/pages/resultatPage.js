@@ -5,14 +5,19 @@ import {
 } from '../constants.js';
 import { initWelcomePage } from './welcomePage.js';
 import { createResultatElement } from '../views/resultatView.js';
-import { quizData } from '../data.js';
-import { clearHint } from '../helper.js';
-import { resultsArray } from './questionPage.js';
+import {
+  clearHint,
+  correctQuestionsCount,
+  skipTotalCount,
+  updateCurrentQuestionIndexLS,
+} from '../helper.js';
 import { userAnswersPage } from './userAnswersPage.js';
-import { userName } from './welcomePage.js';
 
-export const initResultatPage = (correctAnswerTotal) => {
-  console.log(correctAnswerTotal);
+export const initResultatPage = () => {
+  const correctAnswersLS = correctQuestionsCount();
+  const skipedAnswersLS = skipTotalCount();
+  const userName = localStorage.getItem('userName') || 'Player';
+
   clearHint();
   const userInterface = document.getElementById(USER_INTERFACE_ID);
   userInterface.innerHTML = '';
@@ -20,7 +25,6 @@ export const initResultatPage = (correctAnswerTotal) => {
   const resultatElement = createResultatElement();
   userInterface.appendChild(resultatElement);
 
-  const userName = localStorage.getItem('userName') || 'Player';
   const title = document.querySelector('.title');
   title.textContent = `${userName}, you did this!`;
 
@@ -28,23 +32,18 @@ export const initResultatPage = (correctAnswerTotal) => {
 
   const correctAnswers = resultatElement.querySelector('.correct_answers');
 
-  correctAnswers.textContent = `correct : ${
-    localStorage.getItem('correctAnswerTotal') || 0
-  }`;
-  // to get correctAnswerTotal  you can get it from local storage here "localStorage.getItem("correctAnswerTotal")"
+  correctAnswers.textContent = `correct : ${correctAnswersLS || 0}`;
 
   const skipedAnswers = resultatElement.querySelector('.skiped_answers');
-  skipedAnswers.textContent = `skipped : ${
-    localStorage.getItem('skipTotal') || 0
-  }`;
+  skipedAnswers.textContent = `skipped : ${skipedAnswersLS || 0}`;
 
   const result = resultatElement.querySelector('.result__content');
 
-  if (correctAnswerTotal <= 3) {
+  if (correctAnswersLS <= 3) {
     result.textContent = `"You know nothing, Jon Snow!" Your knowledge of Westeros is as thin as the Night’s Watch rations. Time to rewatch the series or revisit the books!`;
     gif.src =
       'https://i.pinimg.com/originals/1d/81/1c/1d811c6f6a57c73154f52158bf21833d.gif';
-  } else if (correctAnswerTotal > 3 && correctAnswerTotal <= 5) {
+  } else if (correctAnswersLS > 3 && correctAnswersLS <= 5) {
     result.textContent = `"A lion does not concern himself with the opinion of sheep." You have a decent grasp of the realm, but you’re not quite ready to claim the Iron Throne. Keep sharpening your knowledge, and soon, you’ll rule like a true Westerosi lord!`;
     gif.src =
       'https://media1.popsugar-assets.com/files/thumbor/RAK72YKlTpQobAXRL4mAs2I1h9I=/fit-in/500x215/top/filters:format_auto():upscale()/2016/06/22/787/n/1922283/e469d8f3_edit_img_cover_file_40413653_1457067600_tyrion.gif';
@@ -64,15 +63,11 @@ export const initResultatPage = (correctAnswerTotal) => {
 };
 
 const startQuiz = () => {
-  quizData.currentQuestionIndex = 0;
   localStorage.clear();
-  quizData.questions.forEach((question) => {
-    question.selected = null;
-    question.skipped = null;
-  });
   initWelcomePage();
 };
 
 const answersPage = () => {
-  userAnswersPage(userName);
+  updateCurrentQuestionIndexLS();
+  userAnswersPage();
 };
