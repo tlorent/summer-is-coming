@@ -22,7 +22,7 @@ import { userAnswersPage } from './userAnswersPage.js';
 
 export const initQuestionPage = () => {
   clearHint();
-  document.body.classList.remove('welcome-background')
+  document.body.classList.remove('welcome-background');
   const quizDataLS = getQuizDataLS();
   const userName = localStorage.getItem('userName');
 
@@ -66,6 +66,7 @@ export const initQuestionPage = () => {
       checkAnswer(answersListElements, answerElement)
     );
   });
+
   const quizTracker = document.getElementById(QUIZ_TRACKER_SECTION);
   quizTracker.classList.add('quiz-tracker-div');
 
@@ -88,19 +89,13 @@ export const initQuestionPage = () => {
     }
     if (skipped) {
       questionCheck.classList.add('skipped');
-      // when the user click the button it should display the question
-      questionCheck.addEventListener('click', () => {
-        quizDataLS.currentQuestionIndex = index;
-        initQuestionPage();
-      });
     }
-
     quizTracker.appendChild(questionCheck);
   });
 
   document.getElementById(RESULTAT_BUTTON_ID).addEventListener('click', () => {
-    // If this is the last question, we immediately show the result
     if (quizDataLS.currentQuestionIndex === quizDataLS.questions.length - 1) {
+      resultButton.style.display = 'none';
       updateCurrentQuestionIndexLS();
       initResultatPage();
     } else {
@@ -115,23 +110,22 @@ export const initQuestionPage = () => {
   document
     .getElementById(SKIP_QUESTION_BUTTON_ID)
     .addEventListener('click', () => {
-      // If this is the last question, show the result
       if (quizDataLS.currentQuestionIndex === quizDataLS.questions.length) {
         initResultatPage();
       } else {
         nextQuestion('skip');
       }
     });
-
   const resultButton = document.getElementById(RESULTAT_BUTTON_ID);
-  resultButton.style.display = 'none';
+
   if (quizDataLS.currentQuestionIndex === quizDataLS.questions.length - 1) {
-    resultButton.style.display = 'inline';
     resultButton.addEventListener('click', () => {
       const resultButton = document.getElementById(RESULTAT_BUTTON_ID);
       resultButton.style.display = 'none';
       initResultatPage();
     });
+  } else {
+    resultButton.style.display = 'none';
   }
 };
 
@@ -158,6 +152,8 @@ const nextQuestion = (eventType) => {
     quizDataLS.questions.length - 1
   ) {
     const nextQuestionButton = document.getElementById(NEXT_QUESTION_BUTTON_ID);
-    nextQuestionButton.style.display = 'none';
+    if (nextQuestionButton) {
+      nextQuestionButton.style.display = 'none';
+    }
   }
 };
