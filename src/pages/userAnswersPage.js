@@ -17,7 +17,7 @@ export const userAnswersPage = () => {
   userInterface.appendChild(resultatElement);
 
   const title = document.querySelector('.title');
-  title.textContent = `${userName}, how you can sheck your answers`;
+  title.textContent = `${userName}, how you can check your answers`;
 
   const showResults = document.querySelector('.show_results');
   questions.forEach((element) => {

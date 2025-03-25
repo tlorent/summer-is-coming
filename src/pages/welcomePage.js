@@ -24,8 +24,10 @@ export const initWelcomePage = (playSoundAgain) => {
     initQuestionPage(); // Start quiz from the saved state
     return; // Exit early to avoid showing the welcome page
   }
-
+  
   userInterface.classList.add('background__welcome');
+
+  
   userInterface.innerHTML = '';
 
   let isPlaying = true;
@@ -105,7 +107,6 @@ export const initWelcomePage = (playSoundAgain) => {
 
 const startQuiz = () => {
   localStorage.setItem('quizDataLS', JSON.stringify(quizData));
-  userInterface.classList.remove('background__welcome');
   if (userName.trim().length < 1) {
     document.querySelector('.input__name').classList.add('need__name');
     const helperText = showHint(
@@ -115,6 +116,7 @@ const startQuiz = () => {
     document.querySelector('body').appendChild(helperText);
     return;
   } else {
+    userInterface.classList.remove('background__welcome');
     initQuestionPage();
   }
 };
