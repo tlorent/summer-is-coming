@@ -14,6 +14,11 @@ body {
   font-family: 'Cinzel', serif;
 }
 
+.welcome-background {
+  background-color: black !important;
+  background-image: none !important;
+}
+
 h1 {
   color: white;
 }
@@ -42,7 +47,7 @@ h1 {
   background: linear-gradient(135deg, #1a1a1a, #2e2e2e, #444444, #5c5c5c);
   box-shadow: 0 0 30px rgb(122, 122, 122);
   background-size: 400% 400%;
-  animation: gradientShift 10s ease infinite;
+  animation: gradientShift 20s ease infinite;
   background-size: 110%;
   background-repeat: no-repeat;
 }
@@ -51,6 +56,7 @@ h1 {
   display: flex;
   flex-direction: column;
   align-items: center;
+  background-size: 150% !important;
   justify-content: center;
   gap: 50px;
   background-image: url('../images/welcomePage.jpg') !important;
@@ -194,7 +200,6 @@ button:hover,
   gap: 10px;
 }
 
-
 .image-column {
   flex: 1;
   display: flex;
@@ -313,7 +318,7 @@ button:hover,
 }
 
 #welcome-quiz-button {
-margin-top: 10px;
+  margin-top: 10px;
 }
 
 .show_results {
@@ -324,7 +329,6 @@ margin-top: 10px;
 .need__name::placeholder {
   color: red;
 }
-
 
 #answers-result-button {
   display: inline;
@@ -348,6 +352,10 @@ margin-top: 10px;
     background-size: 300% !important;
   }
 }
+/* @media (max-width: 3000px) {
+    .background__welcome {
+      background-size: 200% !important;
+    }} */
 
 button {
   background-color: whitesmoke;
@@ -366,9 +374,6 @@ button {
   padding: 10px;
   width: 170px;
   height: 55px;
-
-
-
 }
 
 .sound__button {
