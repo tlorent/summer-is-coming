@@ -3,10 +3,10 @@ import { ANSWERS_BUTTON_ID } from "../constants.js";
 
 
 /**
- * Create the resultat screen
+ * Create the result screen
  * @returns {Element}
  */
-export const createResultatElement = () => {
+export const createResultElement = () => {
   const element = document.createElement('div');
 
   element.innerHTML = String.raw`

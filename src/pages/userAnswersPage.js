@@ -1,6 +1,6 @@
 import { USER_INTERFACE_ID, WELCOME_BUTTON_ID } from '../constants.js';
 import { initWelcomePage } from './welcomePage.js';
-import { createResultatElement } from '../views/userAnswersView.js';
+import { createResultElement } from '../views/userAnswersView.js';
 import { quizData } from '../data.js';
 import { clearHint } from '../helper.js';
 import { resultsArray } from './questionPage.js';
@@ -10,8 +10,8 @@ export const userAnswersPage = (userName) => {
   const userInterface = document.getElementById(USER_INTERFACE_ID);
   userInterface.innerHTML = '';
 
-  const resultatElement = createResultatElement();
-  userInterface.appendChild(resultatElement);
+  const resultElement = createResultElement();
+  userInterface.appendChild(resultElement);
 
   const title = document.querySelector('.title');
   title.textContent = `${userName}, how you can sheck your answers`;
