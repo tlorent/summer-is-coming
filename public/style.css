@@ -437,7 +437,6 @@ button[tooltip]:hover::after {
   height: 25px;
   background-color: black;
   border-radius: 50%;
-  cursor: pointer;
   position: relative;
   transition: all 0.3s ease-in-out;
   flex-shrink: 0;
@@ -459,12 +458,15 @@ button[tooltip]:hover::after {
   display: none;
 }
 
-.question-check-box.answered {
-  background: #4caf50;
+.question-check-box.correct-answered {
+  background: #48cfcb;
+}
+.question-check-box.wrong-answered {
+  background: #d72638;
 }
 
 .question-check-box.skipped {
-  background: #ff9800;
+  background: #c78a00;
 }
 
 .question-check-box.active {
@@ -474,14 +476,6 @@ button[tooltip]:hover::after {
   background-color: whitesmoke;
   box-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
   animation: bounce 0.3s ease-in-out;
-}
-
-.question-check-box.active.answered {
-  border-color: #4caf50;
-}
-
-.question-check-box.active.skipped {
-  border-color: #ff9800;
 }
 
 .question-check-box.active::after {

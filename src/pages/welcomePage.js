@@ -2,7 +2,7 @@ import { USER_INTERFACE_ID, START_QUIZ_BUTTON_ID } from '../constants.js';
 import { createWelcomeElement } from '../views/welcomeView.js';
 import { initQuestionPage } from './questionPage.js';
 import { quizData } from '../data.js';
-import { clearHint, showHint, updateQuestion } from '../helper.js';
+import { getQuizDataLS, showHint } from '../helper.js';
 
 export let userName = '';
 const userInterface = document.getElementById(USER_INTERFACE_ID);
@@ -10,13 +10,11 @@ const userInterface = document.getElementById(USER_INTERFACE_ID);
 export const initWelcomePage = () => {
   // Check if there's a saved user name and current question index in localStorage
   const savedUserName = localStorage.getItem('userName');
-  const savedQuestionIndex = localStorage.getItem('currentQuestion');
+  const quizDataLs = getQuizDataLS();
 
-  if (savedUserName && savedQuestionIndex !== null) {
+  if (savedUserName && quizDataLs !== '{}') {
     // If both are saved, load the quiz directly without showing the welcome page
-    userName = savedUserName;
-    quizData.currentQuestionIndex = JSON.parse(savedQuestionIndex);
-    initQuestionPage(userName); // Start quiz from the saved state
+    initQuestionPage(); // Start quiz from the saved state
     return; // Exit early to avoid showing the welcome page
   }
 
@@ -99,6 +97,7 @@ export const initWelcomePage = () => {
 };
 
 const startQuiz = () => {
+  localStorage.setItem('quizDataLS', JSON.stringify(quizData));
   userInterface.classList.remove('background__welcome');
   if (userName.trim().length < 1) {
     document.querySelector('.input__name').classList.add('need__name');
@@ -109,12 +108,6 @@ const startQuiz = () => {
     document.querySelector('body').appendChild(helperText);
     return;
   } else {
-    quizData.currentQuestionIndex = 0;
-    localStorage.setItem(
-      'currentQuestion',
-      JSON.stringify(quizData.currentQuestionIndex)
-    );
-    initQuestionPage(userName);
-    quizData.questions.forEach((question) => (question.selected = null));
+    initQuestionPage();
   }
 };

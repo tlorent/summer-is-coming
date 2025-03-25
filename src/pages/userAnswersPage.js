@@ -1,12 +1,15 @@
 import { USER_INTERFACE_ID, WELCOME_BUTTON_ID } from '../constants.js';
 import { initWelcomePage } from './welcomePage.js';
 import { createResultatElement } from '../views/userAnswersView.js';
-import { quizData } from '../data.js';
-import { clearHint } from '../helper.js';
-import { resultsArray } from './questionPage.js';
+import { clearHint, getQuizDataLS } from '../helper.js';
 
-export const userAnswersPage = (userName) => {
+export const userAnswersPage = () => {
+  const userName = localStorage.getItem('userName') || 'Player';
+  const { questions } = getQuizDataLS();
+  console.log(questions);
+
   clearHint();
+
   const userInterface = document.getElementById(USER_INTERFACE_ID);
   userInterface.innerHTML = '';
 
@@ -17,43 +20,28 @@ export const userAnswersPage = (userName) => {
   title.textContent = `${userName}, how you can sheck your answers`;
 
   const showResults = document.querySelector('.show_results');
+  questions.forEach((element) => {
+    const { correct, selected, answers, text, skipped } = element;
 
-  resultsArray.forEach((element) => {
-    if (quizData.questions[element.step]) {
-      if (element.correct === element.selected) {
-        const text = quizData.questions[element.step].answers[element.correct];
-        const textQuestion = quizData.questions[element.step].text;
+    const textQuestionElement = document.createElement('div');
+    textQuestionElement.classList.add('question-text');
+    textQuestionElement.textContent = text;
+    showResults.appendChild(textQuestionElement);
 
-        const textQuestionElement = document.createElement('div');
-        textQuestionElement.classList.add('question-text');
-        textQuestionElement.textContent = textQuestion;
-        showResults.appendChild(textQuestionElement);
-
-        const answerElement = document.createElement('div');
-        answerElement.classList.add('correct-answer-text');
-        answerElement.textContent = text;
-        showResults.appendChild(answerElement);
-      } else {
-        const textQuestion = quizData.questions[element.step].text;
-        const textQuestionElement = document.createElement('div');
-        textQuestionElement.classList.add('question-text');
-        textQuestionElement.textContent = textQuestion;
-        showResults.appendChild(textQuestionElement);
-        const textSelected =
-          quizData.questions[element.step].answers[element.selected];
-
-        const answerElementSelected = document.createElement('div');
-        answerElementSelected.classList.add('wrong-answer-text');
-        answerElementSelected.textContent = textSelected;
-        showResults.appendChild(answerElementSelected);
-
-        const textCorrect =
-          quizData.questions[element.step].answers[element.correct];
-        const answerElementCorrect = document.createElement('div');
-        answerElementCorrect.classList.add('correct-answer-text');
-        answerElementCorrect.textContent = textCorrect;
-        showResults.appendChild(answerElementCorrect);
-      }
+    if ((selected && correct === selected) || skipped) {
+      const answerElement = document.createElement('div');
+      answerElement.classList.add('correct-answer-text');
+      answerElement.textContent = answers[correct];
+      showResults.appendChild(answerElement);
+    } else if (selected && correct !== selected) {
+      const answerElement = document.createElement('div');
+      answerElement.classList.add('correct-answer-text');
+      answerElement.textContent = answers[correct];
+      const answerElementSelected = document.createElement('div');
+      answerElementSelected.classList.add('wrong-answer-text');
+      answerElementSelected.textContent = answers[selected];
+      showResults.appendChild(answerElementSelected);
+      showResults.appendChild(answerElement);
     }
   });
 
@@ -63,12 +51,6 @@ export const userAnswersPage = (userName) => {
 };
 
 const startQuiz = () => {
-  quizData.currentQuestionIndex = 0;
   localStorage.clear();
-  quizData.questions.forEach((question) => {
-    question.selected = null;
-    question.skipped = null;
-  });
-
   initWelcomePage();
 };
