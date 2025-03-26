@@ -119,11 +119,7 @@ export const initQuestionPage = () => {
   const resultButton = document.getElementById(RESULTAT_BUTTON_ID);
 
   if (quizDataLS.currentQuestionIndex === quizDataLS.questions.length - 1) {
-    resultButton.addEventListener('click', () => {
-      const resultButton = document.getElementById(RESULTAT_BUTTON_ID);
-      resultButton.style.display = 'none';
-      initResultatPage();
-    });
+        document.getElementById(NEXT_QUESTION_BUTTON_ID).style.display = 'none'
   } else {
     resultButton.style.display = 'none';
   }
