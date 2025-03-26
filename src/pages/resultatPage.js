@@ -14,6 +14,7 @@ import {
 import { userAnswersPage } from './userAnswersPage.js';
 
 export const initResultatPage = () => {
+  
   const correctAnswersLS = correctQuestionsCount();
   const skipedAnswersLS = skipTotalCount();
   const userName = localStorage.getItem('userName') || 'Player';

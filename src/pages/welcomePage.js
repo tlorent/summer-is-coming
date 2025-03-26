@@ -7,15 +7,14 @@ import { getQuizDataLS, showHint } from '../helper.js';
 export let userName = '';
 const userInterface = document.getElementById(USER_INTERFACE_ID);
 
-export const initWelcomePage = () => {
+export const initWelcomePage = (playSoundAgain) => {
   document.body.classList.add('welcome-background');
-  //thiss cuase a bug => i mean theat start quiz again broken because of that i do not why!
-  // if (playSoundAgain) {
-  //   const soundWelcomeButton = document.querySelector('.sound__button');
-  //   const audioWelcome = document.querySelector('.music');
-  //   audioWelcome.remove();
-  //   soundWelcomeButton.remove();
-  // }
+  if (playSoundAgain) {
+    const soundWelcomeButton = document.querySelector('.sound__button');
+    const audioWelcome = document.querySelector('.music');
+    if (soundWelcomeButton && audioWelcome) {audioWelcome.remove();
+      soundWelcomeButton.remove();}
+  }
   const savedUserName = localStorage.getItem('userName');
   const quizDataLs = getQuizDataLS();
 

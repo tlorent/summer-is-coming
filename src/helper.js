@@ -6,7 +6,7 @@ export const getQuizDataLS = () => {
   const quizDataLS = localStorage.getItem('quizDataLS');
   if (quizDataLS) {
     return JSON.parse(quizDataLS);
-  }
+  } 
 };
 
 export const updateCurrentQuestionIndexLS = () => {
